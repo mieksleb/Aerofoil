@@ -1,15 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-typedef struct {
-    double x;
-    double y;
-} Vector2D;
+#include "vector.h" 
 
-typedef struct {
-    Vector2D* data; // Pointer to an array of Vector2D
-    size_t size;       // Number of vectors in the list
-} VectorList;
 
 typedef struct {
     int n1;
@@ -24,6 +17,7 @@ typedef struct {
     double theta; // Panel orientation angle
     double len; // Panel length
     Vector2D mid; // Midpoint coordinates
+    Vector2D pos0prime; // rotatecoordinates of pos0
 } Panel;
 
 typedef struct {
@@ -31,12 +25,9 @@ typedef struct {
     int num_panels;
 } PanelList;
 
-
-
-
-double dist2D(Vector2D v1, Vector2D v2);
-double **getMatrixA (PanelList *list, AerofoilInfo *info);
 PanelList *getPanelList(AerofoilInfo *info);
+// void getPrimedCoords(Panel *p);
+// void getPrimedCoords(Panel p);
 
 //void create_panels(double x_coords[], double y_coords[], Panel panels[], int num_panels);
 
