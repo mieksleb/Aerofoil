@@ -51,6 +51,18 @@ PanelList *getPanelList(AerofoilInfo *info){
     return list;
 }
 
+int isFloatingPointLine(const char *line) {
+    char *endptr;
+    strtod(line, &endptr);
+
+    // Check if the entire line was successfully converted to a floating-point number
+    if (*endptr == '\0' || *endptr == '\n') {
+        return 1;
+    }
+
+    return 0;
+}
+
 
 /// This function takes the Aero data in its standard form and create an AerofoilInfo object
 AerofoilInfo *loadAerofoil(const char *filename) {
@@ -63,59 +75,53 @@ AerofoilInfo *loadAerofoil(const char *filename) {
 
     // Ignore the first line
     char buffer[256];
-    if (fgets(buffer, sizeof(buffer), file) == NULL) {
-        perror("Error reading first line");
-        fclose(file);
-        return NULL;
-    }
-
-
-// Read n1 and n2 from the second line
-    int n1, n2;
-    if (fgets(buffer, sizeof(buffer), file) != NULL) {
-        if (sscanf(buffer, " %d. %d.", &info->n1, &info->n2) != 2) {
-            perror("Error reading integers");
-            fclose(file);
-            return NULL;
-        }
-    } else {
-        perror("Error reading line");
-        fclose(file);
-        return NULL;
-    }
-
-	info->n = info->n1 + info->n2 - 1;
-
-	// Skip a line
-    fgets(buffer, sizeof(buffer), file);
 
     VectorList *pointsList = (VectorList *)malloc(sizeof(VectorList));
-    pointsList->size = info->n;
-    pointsList->data = (Vector2D *)malloc(pointsList->size * sizeof(Vector2D));
+    pointsList->size = 0;
+    pointsList->data = NULL;
 
-	// Read n1 points
-    for (int i = 0; i < info->n1; i++) {
-        if (fgets(buffer, sizeof(buffer), file) != NULL) {
-            if (sscanf(buffer, "%lf %lf", &(pointsList->data[info->n2 + i - 1].x), &(pointsList->data[info->n2 + i - 1].y)) != 2) {
-				perror("Error reading point coordinates 1");
+    while (fgets(buffer, sizeof(buffer), file) != NULL) {
+
+        double x, y;
+        if (sscanf(buffer, "%lf %lf", &x, &y) == 2) {
+            Vector2D *newData = (Vector2D *)realloc(pointsList->data, (pointsList->size + 1) * sizeof(Vector2D));
+            if (newData == NULL) {
+                perror("Error allocating memory for pointsList data");
+                free(pointsList->data);
+                free(pointsList);
+                fclose(file);
+                return NULL;
             }
+            
+            pointsList->data = newData;
+            pointsList->data[pointsList->size].x = x;
+            pointsList->data[pointsList->size].y = y;
+            pointsList->size += 1;
+
         }
+        
     }
 
-    // Skip a line
-    fgets(buffer, sizeof(buffer), file);
-
-    // Read n2 points
-    for (int i = 0; i < info->n2; i++) {
-        if (fgets(buffer, sizeof(buffer), file) != NULL) {
-            if (sscanf(buffer, "%lf %lf", &(pointsList->data[info->n2 - i - 1].x), &(pointsList->data[info->n2 - i - 1].y)) != 2) {
-                perror("Error reading point coordinates");
-            }
-        }
-    }
-
-	info->list = pointsList;
     fclose(file);
+
+    // After reading the file and populating pointsList
+    size_t left = 0;
+    size_t right = pointsList->size - 1;
+
+    while (left < right) {
+        // Swap the elements at left and right indices
+        Vector2D temp = pointsList->data[left];
+        pointsList->data[left] = pointsList->data[right];
+        pointsList->data[right] = temp;
+
+        // Move the indices towards each other
+        left++;
+        right--;
+    }
+
+    info->list = pointsList;
+    info -> n = pointsList->size;
+
     return info;
 }
 

@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -g -DDEBUG
 
-SRC = utils.c main.c
+SRC = math_utils.c utils.c vector.c main.c
 OBJ = $(SRC:.c=.o)
 EXECUTABLE = aerofoil
 

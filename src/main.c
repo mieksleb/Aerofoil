@@ -4,7 +4,7 @@
 #include "vector.h" 
 #include "utils.h" 
 #include "math_utils.h" 
-// #include <lapacke.h>
+
 
 
 // Constants
@@ -15,16 +15,15 @@ AerofoilInfo *loadAerofoil(const char *filename);
 
 int main() {
 
-	const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/usa51.dat";
+	const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/naca4412.dat";
+	// const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/usa51.dat";
 	printf("Loading Aerofoil data from file: %s\n", filename);
 
-	double V_inf = 10;
-	double alpha = 0;
+	double V_inf = 1;
+	double alpha = 6 * M_PI / 180;
 	
 	// Load aerofoil points in a VectorList
 	AerofoilInfo *info = loadAerofoil(filename);
-	int n1 = info->n1;
-	int n2 = info->n2;
 	int n = info->n;
 	printf("Number of data points: %d\n", n);
 
@@ -32,35 +31,64 @@ int main() {
 	PanelList *panelList = getPanelList(info);
 	printf("Number of panels: %d\n", panelList->num_panels);
 	int N = panelList->num_panels;
-	// Create A matrix
-	// double **MatrixA = getMatrixA(panelList, info);
+	for (int i = 0; i < N; i++) {
+		printf(" %lf %lf\n", panelList->data[i].pos0.x, panelList->data[i].pos0.y);
+    }
+	printf(" %lf %lf\n", panelList->data[N-1].pos1.x, panelList->data[N-1].pos1.y);
 
-	// double *Vectorb = getVectorb(panelList, info, V_inf, alpha);
-    // for (int i = 0; i < N + 1; i++) {
-	// 	printf("%lf\n", MatrixA[N,i]);
-	// }
-	// printf("chegoo\n");
-
+	// Create A matrix and b vector
 	double *b = (double *)malloc((N+1) * sizeof(double *));
-    double **A = (double **)malloc((N+1) * sizeof(double *));
+    double **An = (double **)malloc((N+1) * sizeof(double *));
+	double **At = (double **)malloc((N+1) * sizeof(double *));
     for (int i = 0; i < N + 1; i++) {
-        A[i] = (double *)malloc((N+1) * sizeof(double));
-    }
-	getInfluenceCoefficients (panelList, info, A, b, V_inf, alpha);
-
-    for (int i = 0; i < N + 1; i++) {
-		for (int j = 0; i < N + 1; j++) {
-			printf("%lf\n", A[i][j]);
-		}
-        
+        An[i] = (double *)malloc((N+1) * sizeof(double));
+		At[i] = (double *)malloc((N+1) * sizeof(double));
     }
 
-	double *x = solveLinearSystem( A, b, n);
 
-    for (int i = 0; i < N; i++) {
-		printf("%lf\n", x[i]);
+	// Calculate matrix and vector elements
+	getInfluenceCoefficients (panelList, info, An, At, b, V_inf, alpha);
+
+ 	// Solve linear system
+	double *x = solveLinearSystem( An, b, n);
+
+	// get the pressure coefficients
+	double *p = (double *)malloc((N+1) * sizeof(double *));
+	getPressureCoefficients (panelList, info, An, At, p, x, V_inf, alpha);
+
+	printf("Pressure Coefficienrs:\n");
+	for (int i = 0; i < N; i++) {
+		printf("%lf\n", p[i]);
 	}
 
+	   // Open a file for writing
+    FILE *outputFile;
+    outputFile = fopen("pressure_coefficients.txt", "w");
+
+    // Check if the file opened successfully
+    if (outputFile == NULL) {
+        perror("Error opening the file");
+        return 1; // Exit with an error code
+    }
+
+    // Write the values to the file
+    for (int i = 0; i < N; i++) {
+        fprintf(outputFile, "%lf %lf\n", panelList->data[i].pos0.x, p[i]);
+    }
+
+    // Close the file
+    fclose(outputFile);
+
+	double C_lift = getLiftCoefficient(panelList, info, p);
+	printf("Lift coefficient: %lf\n", C_lift);
+
+
+
+
+	free(p);
+	free(An);
+	free(At);
+	free(x);
 
 
     return 0;
