@@ -25,7 +25,8 @@ int main() {
     //     return 1;
     // }
 
-	const char *filename = "../aerofoil_data/naca0012.dat";
+	const char *filename = "naca0012.dat";
+	// const char *filename = "../aerofoil_data/naca0012.dat";
 	// const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/usa51.dat";
 
 	double V_inf = 1;
