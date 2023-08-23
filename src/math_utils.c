@@ -84,7 +84,6 @@ void getPressureCoefficients (PanelList *list, double **J, double **L, double *c
 }
 
 
-
 void computeIJ( PanelList *list, double **I, double **J ) {
     int N = list->num_panels; // number of panels
 
