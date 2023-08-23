@@ -41,10 +41,10 @@ PanelList *getPanelList(AerofoilInfo *info){
 
 /// This function takes the Aero data in its standard form and create an AerofoilInfo object
 AerofoilInfo *loadAerofoil(const char *filename) {
-    printf("Chug bupis");
 	AerofoilInfo *info = (AerofoilInfo *)malloc(sizeof(AerofoilInfo));
     printf("Loading Aerofoil data from file: %s\n", filename);
     FILE *file = fopen(filename, "r");
+    printf("Chug bupis\n");
     if (file == NULL) {
         perror("Error opening file");
         return NULL;
