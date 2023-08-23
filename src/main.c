@@ -84,7 +84,7 @@ int main() {
     // Close the file
     fclose(outputFile);
 
-	double C_lift = getLiftCoefficient(panelList, info, cp, alpha);
+	double C_lift = getLiftCoefficient(panelList, cp, alpha);
 	printf("Lift coefficient: %lf\n", C_lift);
 
 

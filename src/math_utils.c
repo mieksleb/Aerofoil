@@ -266,9 +266,8 @@ double *solveLinearSystem(double **A, double *b, int dim) {
 
 
 
-double getLiftCoefficient(PanelList *list, AerofoilInfo *info, double *cp, double alpha) {
+double getLiftCoefficient(PanelList *list, double *cp, double alpha) {
     int N = list->num_panels; // number of panels
-    int num_points = info->n; //  number of points
     double C_lift = 0;
     for (int i = 0; i < N; i++) {
 

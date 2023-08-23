@@ -4,22 +4,6 @@
 #include <math.h>
 
 
-
-// get primed coordinates of a panel
-// void getPrimedCoords(Panel *p){
-//     double theta = p->theta;
-//     p->pos0prime.x = cos(theta) * p->pos0.x + sin(theta) * p->pos0.y;
-//     p->pos0prime.y = - sin(theta) * p->pos0.x + cos(theta) * p->pos0.y;
-
-// }
-
-// void getPrimedCoords(Panel p){
-//     double theta = p.theta;
-//     p.pos0prime.x = cos(theta) * p.pos0.x + sin(theta) * p.pos0.y;
-//     p.pos0prime.y = - sin(theta) * p.pos0.x + cos(theta) * p.pos0.y;
-
-// }
-
 // This function takes the aerofoil info (points etc) and creates list of panel objects
 PanelList *getPanelList(AerofoilInfo *info){
     PanelList *list = (PanelList *)malloc(sizeof(PanelList));
@@ -52,18 +36,6 @@ PanelList *getPanelList(AerofoilInfo *info){
 
     }
     return list;
-}
-
-int isFloatingPointLine(const char *line) {
-    char *endptr;
-    strtod(line, &endptr);
-
-    // Check if the entire line was successfully converted to a floating-point number
-    if (*endptr == '\0' || *endptr == '\n') {
-        return 1;
-    }
-
-    return 0;
 }
 
 
