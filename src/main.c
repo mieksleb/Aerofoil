@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include "vector.h" 
 #include "utils.h" 
-// #include "math_utils.h" 
+#include "math_utils.h" 
 
 
 
