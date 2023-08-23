@@ -45,11 +45,11 @@ AerofoilInfo *loadAerofoil(const char *filename) {
     printf("Loading Aerofoil data from file: %s\n", filename);
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
+        printf("Chug bupis\n");
         perror("Error opening file");
         return NULL;
     }
 
-    printf("Chug bupis\n");
     // Ignore the first line
     char buffer[256];
 
