@@ -50,17 +50,20 @@ int main() {
 		K[i] = (double *)malloc(N * sizeof(double));
 		L[i] = (double *)malloc(N * sizeof(double));
     }
-
+	printf("chogolate\n");
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
-
+	printf("hot chogolate\n");
  	// Solve linear system
 	double *x = solveLinearSystem( A, b, n);
+	printf("boiling chogolate\n");
 
 
 	// get the pressure coefficients
 	double *cp = (double *)malloc((N+1) * sizeof(double *));
+	printf("scaulding chogolate\n");
 	getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
+	printf("nuclear chogolate\n");
 
 	//    // Open a file for writing
     // FILE *outputFile;
