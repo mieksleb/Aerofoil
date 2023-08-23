@@ -1,6 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -g -DDEBUG
-
+CFLAGS = -Wall -Wextra -ggdb -O0 -DDEBUG -v
 LIBS += -lm
 
 SRC = math_utils.c utils.c vector.c main.c
