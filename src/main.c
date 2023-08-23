@@ -55,37 +55,37 @@ int main() {
 		L[i] = (double *)malloc(N * sizeof(double));
     }
 
-	// Calculate matrix and vector elements
-	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
+	// // Calculate matrix and vector elements
+	// getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
 
- 	// Solve linear system
-	double *x = solveLinearSystem( A, b, n);
+ 	// // Solve linear system
+	// double *x = solveLinearSystem( A, b, n);
 
 
-	// get the pressure coefficients
-	double *cp = (double *)malloc((N+1) * sizeof(double *));
-	getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
+	// // get the pressure coefficients
+	// double *cp = (double *)malloc((N+1) * sizeof(double *));
+	// getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
 
-	   // Open a file for writing
-    FILE *outputFile;
-    outputFile = fopen("pressure_coefficients.txt", "w");
+	//    // Open a file for writing
+    // FILE *outputFile;
+    // outputFile = fopen("pressure_coefficients.txt", "w");
 
-    // Check if the file opened successfully
-    if (outputFile == NULL) {
-        perror("Error opening the file");
-        return 1; // Exit with an error code
-    }
+    // // Check if the file opened successfully
+    // if (outputFile == NULL) {
+    //     perror("Error opening the file");
+    //     return 1; // Exit with an error code
+    // }
 
-    // Write the values to the file
-    for (int i = 0; i < N; i++) {
-        fprintf(outputFile, "%lf %lf\n", panelList->data[i].mid.x, cp[i]);
-    }
+    // // Write the values to the file
+    // for (int i = 0; i < N; i++) {
+    //     fprintf(outputFile, "%lf %lf\n", panelList->data[i].mid.x, cp[i]);
+    // }
 
-    // Close the file
-    fclose(outputFile);
+    // // Close the file
+    // fclose(outputFile);
 
-	double C_lift = getLiftCoefficient(panelList, cp, alpha);
-	printf("Lift coefficient: %lf\n", C_lift);
+	// double C_lift = getLiftCoefficient(panelList, cp, alpha);
+	// printf("Lift coefficient: %lf\n", C_lift);
 
 
 
@@ -96,7 +96,7 @@ int main() {
 	free(J);
 	free(K);
 	free(L);
-	free(x);
+	// free(x);
 	free(b);
 
 

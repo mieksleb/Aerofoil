@@ -12,7 +12,7 @@
 
 double dist2D(Vector2D v1, Vector2D v2);
 double *solveLinearSystem(double **A, double *b, int dim);
-void getInfluenceCoefficients (PanelList *list, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha);
+// void getInfluenceCoefficients (PanelList *list, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha);
 void getPressureCoefficients (PanelList *list,double **J, double **L, double *cp, double *x, double V_inf, double alpha);
 double getLiftCoefficient(PanelList *list, double *cp, double alpha);
 
