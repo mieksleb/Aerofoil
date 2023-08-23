@@ -266,18 +266,18 @@
 
 
 
-double getLiftCoefficient(PanelList *list, double *cp, double alpha) {
-    int N = list->num_panels; // number of panels
-    double C_lift = 0;
-    for (int i = 0; i < N; i++) {
+// double getLiftCoefficient(PanelList *list, double *cp, double alpha) {
+//     int N = list->num_panels; // number of panels
+//     double C_lift = 0;
+//     for (int i = 0; i < N; i++) {
 
-        Panel paneli = list->data[i];
-        double beta = paneli.theta + M_PI /2 - alpha;
-        C_lift += cp[i] * paneli.len * sin (alpha - beta);
-    }
+//         Panel paneli = list->data[i];
+//         double beta = paneli.theta + M_PI /2 - alpha;
+//         C_lift += cp[i] * paneli.len * sin (alpha - beta);
+//     }
 
-    return C_lift;
+//     return C_lift;
 
 
-}
+// }
 
