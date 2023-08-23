@@ -41,22 +41,20 @@ PanelList *getPanelList(AerofoilInfo *info){
 
 /// This function takes the Aero data in its standard form and create an AerofoilInfo object
 AerofoilInfo *loadAerofoil(const char *filename) {
+    printf("Chug bupis");
 	AerofoilInfo *info = (AerofoilInfo *)malloc(sizeof(AerofoilInfo));
     printf("Loading Aerofoil data from file: %s\n", filename);
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
-        printf("chug bupise");
         perror("Error opening file");
         return NULL;
     }
 
-    printf("chug bupis");
 
     // Ignore the first line
     char buffer[256];
 
     VectorList *pointsList = (VectorList *)malloc(sizeof(VectorList));
-    printf("chug bupis");
     pointsList->size = 0;
     pointsList->data = NULL;
 
