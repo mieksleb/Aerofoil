@@ -60,6 +60,7 @@ AerofoilInfo *loadAerofoil(const char *filename) {
 
         double x, y;
         if (sscanf(buffer, "%lf %lf", &x, &y) == 2) {
+            printf("chug bupis");
             Vector2D *newData = (Vector2D *)realloc(pointsList->data, (pointsList->size + 1) * sizeof(Vector2D));
             if (newData == NULL) {
                 perror("Error allocating memory for pointsList data");
