@@ -15,7 +15,7 @@ AerofoilInfo *loadAerofoil(const char *filename);
 
 int main() {
 
-	const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/naca0012.dat";
+	const char *filename = "../aerofoil_data/naca0012.dat";
 	// const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/usa51.dat";
 	printf("Loading Aerofoil data from file: %s\n", filename);
 
