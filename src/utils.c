@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "utils.h"
 #include <math.h>
+#include "utils.h"
 
 
 // This function takes the aerofoil info (points etc) and creates list of panel objects

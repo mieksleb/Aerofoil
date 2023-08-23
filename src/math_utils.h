@@ -1,11 +1,12 @@
 #ifndef MATH_UTILS_H
 #define MATH_UTILS_H
 
-#include "utils.h"
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "utils.h"
 #include "vector.h"
-#include <stdlib.h>
+
 
 #define TWOPI 6.283185307179586476925286766559
 
