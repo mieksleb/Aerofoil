@@ -141,128 +141,128 @@
 //     }
 // }
 
-void computeKL( PanelList *list, double **K, double **L) {
-    int N = list->num_panels; // number of panels
+// void computeKL( PanelList *list, double **K, double **L) {
+//     int N = list->num_panels; // number of panels
 
-    for (int i = 0; i < N; i++) {
+//     for (int i = 0; i < N; i++) {
 
-        Panel paneli = list->data[i];
-        Vector2D rc = paneli.mid;
-        double xc = rc.x;
-        double yc = rc.y;
-        double dx = paneli.pos1.x - paneli.pos0.x;
-        double dy = paneli.pos1.y - paneli.pos0.y;
-        double thetai = atan2( dy, dx);
+//         Panel paneli = list->data[i];
+//         Vector2D rc = paneli.mid;
+//         double xc = rc.x;
+//         double yc = rc.y;
+//         double dx = paneli.pos1.x - paneli.pos0.x;
+//         double dy = paneli.pos1.y - paneli.pos0.y;
+//         double thetai = atan2( dy, dx);
 
 
-        for (int j = 0; j < N; j++) {
-            Panel panelj = list->data[j];
-            Vector2D rj = panelj.pos0;
-            if (i != j) {
-                double thetaj = panelj.theta;
-                double xb = rj.x;
-                double yb = rj.y;
-                double lj = panelj.len;
+//         for (int j = 0; j < N; j++) {
+//             Panel panelj = list->data[j];
+//             Vector2D rj = panelj.pos0;
+//             if (i != j) {
+//                 double thetaj = panelj.theta;
+//                 double xb = rj.x;
+//                 double yb = rj.y;
+//                 double lj = panelj.len;
 
-                double A = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
-                double B = pow (xc - xb, 2) + pow (yc - yb, 2);
-                double Cn = - cos (thetai - thetaj);
-                double Dn = ( xc - xb ) * cos (thetai) + (yc - yb) * sin (thetai);
-                double Ct =  - sin (thetai - thetaj);
-                double Dt = ( xc  - xb ) * sin (thetai) - (yc - yb) * cos (thetai);
-                if (B - pow (A,2) <= 0 ) {
-                    K[i][j] = 0;
-                    L[i][j] = 0;
-                }
-                else {
-                    double E = pow ( B - pow (A,2) , 0.5);
-                    double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
-                    double term2 = ( ( Dn - A * Cn ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
-                    K[i][j] = term1 + term2; 
+//                 double A = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
+//                 double B = pow (xc - xb, 2) + pow (yc - yb, 2);
+//                 double Cn = - cos (thetai - thetaj);
+//                 double Dn = ( xc - xb ) * cos (thetai) + (yc - yb) * sin (thetai);
+//                 double Ct =  - sin (thetai - thetaj);
+//                 double Dt = ( xc  - xb ) * sin (thetai) - (yc - yb) * cos (thetai);
+//                 if (B - pow (A,2) <= 0 ) {
+//                     K[i][j] = 0;
+//                     L[i][j] = 0;
+//                 }
+//                 else {
+//                     double E = pow ( B - pow (A,2) , 0.5);
+//                     double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
+//                     double term2 = ( ( Dn - A * Cn ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+//                     K[i][j] = term1 + term2; 
                      
 
-                    double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
-                    double term4 = ( ( Dt - A * Ct ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
-                    L[i][j] = term3 + term4; 
+//                     double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
+//                     double term4 = ( ( Dt - A * Ct ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+//                     L[i][j] = term3 + term4; 
 
-                }
+//                 }
 
-            }
-            else {
-                K[i][j] = 0;
-                L[i][j] = 0;
-            }
-        }
-    }
+//             }
+//             else {
+//                 K[i][j] = 0;
+//                 L[i][j] = 0;
+//             }
+//         }
+//     }
 
-}
+// }
 
 
-// solves Ax=b
-double *solveLinearSystem(double **A, double *b, int dim) {
-    // Allocate memory for vector x
-    double *x = (double *)malloc(dim * sizeof(double));
-    if (x == NULL) {
-        printf("Memory allocation failed.\n");
-        return NULL;
-    }
+// // solves Ax=b
+// double *solveLinearSystem(double **A, double *b, int dim) {
+//     // Allocate memory for vector x
+//     double *x = (double *)malloc(dim * sizeof(double));
+//     if (x == NULL) {
+//         printf("Memory allocation failed.\n");
+//         return NULL;
+//     }
 
-    // Create a local copy of the matrix A and vector b for modification
-    double **A_copy = (double **)malloc(dim * sizeof(double *));
-    double *b_copy = (double *)malloc(dim * sizeof(double));
-    if (A_copy == NULL || b_copy == NULL) {
-        printf("Memory allocation failed.\n");
-        free(x);
-        free(A_copy);
-        free(b_copy);
-        return NULL;
-    }
+//     // Create a local copy of the matrix A and vector b for modification
+//     double **A_copy = (double **)malloc(dim * sizeof(double *));
+//     double *b_copy = (double *)malloc(dim * sizeof(double));
+//     if (A_copy == NULL || b_copy == NULL) {
+//         printf("Memory allocation failed.\n");
+//         free(x);
+//         free(A_copy);
+//         free(b_copy);
+//         return NULL;
+//     }
     
-    for (int i = 0; i < dim; i++) {
-        A_copy[i] = (double *)malloc(dim * sizeof(double));
-        if (A_copy[i] == NULL) {
-            printf("Memory allocation failed.\n");
-            for (int j = 0; j < i; j++) {
-                free(A_copy[j]);
-            }
-            free(x);
-            free(A_copy);
-            free(b_copy);
-            return NULL;
-        }
-        for (int j = 0; j < dim; j++) {
-            A_copy[i][j] = A[i][j];
-        }
-        b_copy[i] = b[i];
-    }
+//     for (int i = 0; i < dim; i++) {
+//         A_copy[i] = (double *)malloc(dim * sizeof(double));
+//         if (A_copy[i] == NULL) {
+//             printf("Memory allocation failed.\n");
+//             for (int j = 0; j < i; j++) {
+//                 free(A_copy[j]);
+//             }
+//             free(x);
+//             free(A_copy);
+//             free(b_copy);
+//             return NULL;
+//         }
+//         for (int j = 0; j < dim; j++) {
+//             A_copy[i][j] = A[i][j];
+//         }
+//         b_copy[i] = b[i];
+//     }
 
-    // Forward elimination
-    for (int i = 0; i < dim - 1; i++) {
-        for (int j = i + 1; j < dim; j++) {
-            double factor = A_copy[j][i] / A_copy[i][i];
-            for (int k = i; k < dim; k++) {
-                A_copy[j][k] -= factor * A_copy[i][k];
-            }
-            b_copy[j] -= factor * b_copy[i];
-        }
-    }
+//     // Forward elimination
+//     for (int i = 0; i < dim - 1; i++) {
+//         for (int j = i + 1; j < dim; j++) {
+//             double factor = A_copy[j][i] / A_copy[i][i];
+//             for (int k = i; k < dim; k++) {
+//                 A_copy[j][k] -= factor * A_copy[i][k];
+//             }
+//             b_copy[j] -= factor * b_copy[i];
+//         }
+//     }
 
-    // Back substitution
-    for (int i = dim - 1; i >= 0; i--) {
-        x[i] = b_copy[i];
-        for (int j = i + 1; j < dim; j++) {
-            x[i] -= A_copy[i][j] * x[j];
-        }
-        x[i] /= A_copy[i][i];
-    }
+//     // Back substitution
+//     for (int i = dim - 1; i >= 0; i--) {
+//         x[i] = b_copy[i];
+//         for (int j = i + 1; j < dim; j++) {
+//             x[i] -= A_copy[i][j] * x[j];
+//         }
+//         x[i] /= A_copy[i][i];
+//     }
 
-    for (int i = 0; i < dim; i++) {
-        free(A_copy[i]);
-    }
-    free(A_copy);
-    free(b_copy);
-    return x;
-}
+//     for (int i = 0; i < dim; i++) {
+//         free(A_copy[i]);
+//     }
+//     free(A_copy);
+//     free(b_copy);
+//     return x;
+// }
 
 
 
