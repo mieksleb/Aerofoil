@@ -45,14 +45,18 @@ AerofoilInfo *loadAerofoil(const char *filename) {
     printf("Loading Aerofoil data from file: %s\n", filename);
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
+        printf("chug bupise");
         perror("Error opening file");
         return NULL;
     }
+
+    printf("chug bupis");
 
     // Ignore the first line
     char buffer[256];
 
     VectorList *pointsList = (VectorList *)malloc(sizeof(VectorList));
+    printf("chug bupis");
     pointsList->size = 0;
     pointsList->data = NULL;
 
@@ -60,7 +64,6 @@ AerofoilInfo *loadAerofoil(const char *filename) {
 
         double x, y;
         if (sscanf(buffer, "%lf %lf", &x, &y) == 2) {
-            printf("chug bupis");
             Vector2D *newData = (Vector2D *)realloc(pointsList->data, (pointsList->size + 1) * sizeof(Vector2D));
             if (newData == NULL) {
                 perror("Error allocating memory for pointsList data");
