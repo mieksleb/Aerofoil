@@ -18,6 +18,7 @@ typedef struct {
     double len; // Panel length
     Vector2D mid; // Midpoint coordinates
     Vector2D pos0prime; // rotatecoordinates of pos0
+    double beta;
 } Panel;
 
 typedef struct {
@@ -26,8 +27,7 @@ typedef struct {
 } PanelList;
 
 PanelList *getPanelList(AerofoilInfo *info);
-// void getPrimedCoords(Panel *p);
-// void getPrimedCoords(Panel p);
+AerofoilInfo *loadAerofoil(const char *filename);
 
 //void create_panels(double x_coords[], double y_coords[], Panel panels[], int num_panels);
 

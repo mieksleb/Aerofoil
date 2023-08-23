@@ -43,6 +43,9 @@ PanelList *getPanelList(AerofoilInfo *info){
             panel.mid = addVectors(point1,point2);
             divideVector(&panel.mid, 2);
             panel.theta = atan2(dy, dx);
+            if (panel.theta < 0) {
+                panel.theta += 2 * M_PI;
+            }
             list->data[i] = panel;
         }
 

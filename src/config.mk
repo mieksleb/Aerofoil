@@ -1,8 +1,17 @@
-# Lines starting with '#' are comments.
+CC = gcc
+CFLAGS = -Wall -Wextra -g -DDEBUG
 
-# Explicitely specify which files to compile
-SOURCES = \
-	main.c
+SRC = math_utils.c utils.c vector.c main.c
+OBJ = $(SRC:.c=.o)
+EXECUTABLE = aerofoil
 
-# Options that get passed to the C compiler
-#CFLAGS = -DDEBUG
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm -f $(OBJ) $(EXECUTABLE)

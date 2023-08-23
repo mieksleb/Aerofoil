@@ -6,7 +6,89 @@
 #include "math_utils.h"
 
 
-void getInfluenceCoefficients (PanelList *list, AerofoilInfo *info, double **An, double **At, double *b, double V_inf, double alpha){
+void getInfluenceCoefficients (PanelList *list, AerofoilInfo *info, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha){
+    int N = list->num_panels; // number of panels
+    int num_points = info->n; //  number of points
+
+
+    computeIJ( list, info, I, J , V_inf, alpha);
+    computeKL( list, info, K, L , V_inf, alpha);
+    double SUM2 = TWOPI;
+    for (int i = 0; i < N; i++) {
+
+        double SUM1 = 0;
+        Panel paneli = list->data[i];
+        paneli.beta = paneli.theta + M_PI /2 - alpha;
+
+        b[i] = - V_inf * TWOPI * cos (paneli.beta);
+
+        A[N][i] = J[0][i] + J[N-1][i];
+        SUM2 +=  - ( L[0][i] + L[N-1][i] );
+
+        if (paneli.beta > TWOPI) {
+            paneli.beta += - TWOPI;
+        }
+
+        for (int j = 0; j < N; j++) {
+
+            SUM1 += - K[i][j];
+
+            if ( i == j ) {
+                A[i][j] = M_PI;
+            }
+            else{
+                A[i][j] = I[i][j];
+            }
+
+        }
+
+        A[i][N] = SUM1;
+    }
+
+    A[N][N] = SUM2;
+    Panel panel1 = list->data[0];
+    Panel panelN = list->data[N-1];
+
+    double beta1 = panel1.theta + M_PI /2 - alpha;
+    double betaN = panelN.theta + M_PI /2 - alpha;
+
+    b[N] = - V_inf * TWOPI * ( sin( beta1) +  sin( betaN));
+
+
+}
+
+
+
+void getPressureCoefficients (PanelList *list, AerofoilInfo *info, double **J, double **L, double *cp, double *x, double V_inf, double alpha){
+    int N = list->num_panels; // number of panels
+    int num_points = info->n; //  number of points
+
+    for (int i = 0; i < N; i++) {
+        Panel paneli = list->data[i];
+
+        double betai = paneli.theta + M_PI /2 - alpha;
+
+        double term1 = sin( betai) * V_inf;
+        double term3 = x[N] / 2; 
+        double term2 = 0;
+        double term4 = 0;
+        for (int j = 0; j < N; j++) {
+
+            term2 += x[j] * J[i][j] / TWOPI;
+            term4 += - x[N] * L[i][j] / TWOPI;
+
+        }
+
+        cp[i] = term1 + term2 + term3 + term4;
+        cp[i] = 1 - pow( cp[i] / V_inf, 2);
+    }
+
+
+}
+
+
+
+void computeIJ( PanelList *list, AerofoilInfo *info, double **I, double **J , double V_inf, double alpha) {
     int N = list->num_panels; // number of panels
     int num_points = info->n; //  number of points
 
@@ -14,92 +96,111 @@ void getInfluenceCoefficients (PanelList *list, AerofoilInfo *info, double **An,
 
         Panel paneli = list->data[i];
         Vector2D rc = paneli.mid;
-        double thetai = paneli.theta;
-        b[i] =  V_inf * sin(thetai - alpha);
-        double sumn = 0;
-        double sumt = 0;
+        Vector2D r1 = paneli.pos0;
+        Vector2D r2 = paneli.pos1;
+        double xc = rc.x;
+        double yc = rc.y;
+        double dx = paneli.pos1.x - paneli.pos0.x;
+        double dy = paneli.pos1.y - paneli.pos0.y;
+        double thetai = atan2( dy, dx);
 
         for (int j = 0; j < N; j++) {
-    
+            Panel panelj = list->data[j];
+            Vector2D rj = panelj.pos0;
             if (i != j) {
-
-                Panel panelj = list->data[j];
-                Vector2D rj = panelj.pos0;
                 double thetaj = panelj.theta;
-                Vector2D rjplus1 = panelj.pos1;
-                double lj = dist2D(rj, rjplus1);
+                double xb = rj.x;
+                double yb = rj.y;
+                double lj = panelj.len;
 
-                Vector2D rij_vec = subtractVectors(rc, rj);
-                Vector2D rij_vec_primed = rotateVector(rij_vec, thetaj);
-
-                // rotate to starred coordinates
-                double xstar = rij_vec_primed.x;
-                double ystar = rij_vec_primed.y;
-
-                double betaij = atan2(ystar, xstar - lj) - atan2(ystar, xstar);
-
-                double r1 = pow( xstar, 2) + pow( ystar, 2);
-                double r2 = pow( xstar - lj, 2) + pow( ystar, 2);
-                double logr = 0.5 * log( r2 / r1 );
-                double sinij = sin ( thetai - thetaj );
-                double cosij = cos ( thetai - thetaj );
+                double A = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
+                double B = pow (xc - xb, 2) + pow (yc - yb, 2);
+                double Cn = sin (thetai - thetaj);
+                double Dn = - ( xc - xb ) * sin (thetai) + (yc - yb) * cos (thetai);
+                double Ct = - cos (thetai - thetaj);
+                double Dt = ( xc  - xb ) * cos (thetai) + (yc - yb) * sin (thetai);
 
 
-                An[i][j] = ( sinij * logr + cosij * betaij ) / TWOPI ;
-                At[i][j] = ( sinij * betaij - cosij * logr ) / TWOPI ;
-                
-                sumn += cosij * logr - sinij * betaij;
-                sumt += sinij * logr + cosij * betaij;
-                
+                if (B - pow (A,2) <= 0 ) {
+                    I[i][j] = 0;
+                    J[i][j] = 0;
+                }
+                else {
+                    double E = pow ( B - pow (A,2) , 0.5);
+                    double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
+                    double term2 = ( ( Dn - A * Cn ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    I[i][j] = term1 + term2; 
+
+
+                    double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
+                    double term4 = ( ( Dt - A * Ct ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    J[i][j] = term3 + term4; 
+
+                }
 
             }
             else {
-                // no logarithmic contribution here abd betaii is pi leading to simple formula
-                An[i][j] = 0.5;
-                At[i][j] = 0;
-                sumt += M_PI;
+                I[i][j] = 0;
+                J[i][j] = 0;
             }
-
- 
         }
-        An[i][N] = sumn / TWOPI;
-        At[i][N] = sumt / TWOPI;
     }
-
-
-    // A_{N+1,j} elements
-    Panel panel1 = list->data[0];
-    Panel panelN = list->data[N-1];
-    
-    for (int j = 0; j < N + 1; j++) {
-        An[N][j] = At[0][j] + At[N-1][j];
-    }
-
-
-    b[N] = - V_inf * cos (panel1.theta - alpha) - V_inf * cos (panelN.theta - alpha);
-
 }
 
-
-
-void getPressureCoefficients (PanelList *list, AerofoilInfo *info, double **An, double **At, double *p, double *x, double V_inf, double alpha){
+void computeKL( PanelList *list, AerofoilInfo *info, double **K, double **L , double V_inf, double alpha) {
     int N = list->num_panels; // number of panels
     int num_points = info->n; //  number of points
 
     for (int i = 0; i < N; i++) {
+
         Panel paneli = list->data[i];
-        double thetai = paneli.theta;
-        p[i] = cos(thetai - alpha) * V_inf;
+        Vector2D rc = paneli.mid;
+        double xc = rc.x;
+        double yc = rc.y;
+        double dx = paneli.pos1.x - paneli.pos0.x;
+        double dy = paneli.pos1.y - paneli.pos0.y;
+        double thetai = atan2( dy, dx);
+
 
         for (int j = 0; j < N; j++) {
+            Panel panelj = list->data[j];
+            Vector2D rj = panelj.pos0;
+            if (i != j) {
+                double thetaj = panelj.theta;
+                double xb = rj.x;
+                double yb = rj.y;
+                double lj = panelj.len;
 
-            p[i] +=  At[i][j] * x[i] + An[i][j] * x[N];
+                double A = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
+                double B = pow (xc - xb, 2) + pow (yc - yb, 2);
+                double Cn = - cos (thetai - thetaj);
+                double Dn = ( xc - xb ) * cos (thetai) + (yc - yb) * sin (thetai);
+                double Ct =  - sin (thetai - thetaj);
+                double Dt = ( xc  - xb ) * sin (thetai) - (yc - yb) * cos (thetai);
+                if (B - pow (A,2) <= 0 ) {
+                    K[i][j] = 0;
+                    L[i][j] = 0;
+                }
+                else {
+                    double E = pow ( B - pow (A,2) , 0.5);
+                    double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
+                    double term2 = ( ( Dn - A * Cn ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    K[i][j] = term1 + term2; 
+                     
+
+                    double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
+                    double term4 = ( ( Dt - A * Ct ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    L[i][j] = term3 + term4; 
+
+                }
 
             }
-
-        p[i] = 1 - pow( p[i] / V_inf, 2);
+            else {
+                K[i][j] = 0;
+                L[i][j] = 0;
+            }
+        }
     }
-
 
 }
 
@@ -172,194 +273,19 @@ double *solveLinearSystem(double **A, double *b, int dim) {
 
 
 
-void getInfluenceCoefficients2 (PanelList *list, AerofoilInfo *info, double **A, double *b, double V_inf, double alpha){
-    int N = list->num_panels; // number of panels
-    int num_points = info->n; //  number of points
-
-
-    double xc, yc, dx, dy, theti, sni, csi, xt, yt, theta, cs, sn, csm, snm;
-    double x1, y1, x2, r1, r2, th1, th2, u1l, u2l, w1l, w2l, u1, u2, w1, w2, holda;
-
-
-    for (int i = 0; i < N; i++) {
-        Panel paneli = list->data[i];
-        double x0 = paneli.pos0.x;
-        double y0 = paneli.pos0.y;
-        double x1 = paneli.pos1.x;
-        double y1 = paneli.pos1.y;
-        xc = (x0 + x1) * 0.5;
-        yc = (y0 + y1) * 0.5;
-        dx = x1 - x0;
-        dy = y1 - y0;
-        theti = atan2(dy, dx);
-        sni = sin(theti);
-        csi = cos(theti);
-
-        for (int j = 0; j < N; j++) {
-            Panel panelj = list->data[j];
-            double xj = panelj.pos0.x;
-            double yj = panelj.pos0.y;
-            xt = xc - xj;
-            yt = yc - yj;
-            dx = x1 - x0;
-            dy = y1 - y0;
-            theta = atan2(dy, dx);
-            cs = cos(theta);
-            sn = sin(theta);
-            csm = cos(-theta);
-            snm = sin(-theta);
-
-            x1 = xt * cs + yt * sn;
-            y1 = -xt * sn + yt * cs;
-            x2 = dx * cs + dy * sn;
-            r1 = sqrt(fabs(x1 * x1 + y1 * y1));
-            r2 = sqrt(fabs((x1 - x2) * (x1 - x2) + y1 * y1));
-            th1 = atan2(y1, x1);
-            th2 = atan2(y1, (x1 - x2));
-
-            if (i == j) {
-                u1l = -0.5 * (x1 - x2) / x2;
-                u2l = 0.5 * x1 / x2;
-                w1l = -0.15916;
-                w2l = 0.15916;
-            } else {
-                u1l = -(y1 * log(r2 / r1) + x1 * (th2 - th1) - x2 * (th2 - th1)) / (TWOPI * x2);
-                u2l = (y1 * log(r2 / r1) + x1 * (th2 - th1)) / (TWOPI * x2);
-                w1l = -((x2 - y1 * (th2 - th1)) - x1 * log(r1 / r2) + x2 * log(r1 / r2)) / (TWOPI * x2);
-                w2l = ((x2 - y1 * (th2 - th1)) - x1 * log(r1 / r2)) / (TWOPI * x2);
-            }
-
-            u1 = u1l * csm + w1l * snm;
-            u2 = u2l * csm + w2l * snm;
-            w1 = -u1l * snm + w1l * csm;
-            w2 = -u2l * snm + w2l * csm;
-
-            if (j == 0) {
-                A[i][0] = -u1 * sni + w1 * csi;
-                holda = -u2 * sni + w2 * csi;
-            }
-            else if (j == N) {
-                A[i][N] = -u1 * sni + w1 * csi + holda;
-                A[i][N+1] = -u2 * sni + w2 * csi;
-            }
-            else {
-                A[i][j] = -u1 * sni + w1 * csi + holda;
-                holda = -u2 * sni + w2 * csi;
-            }
-        }
-
-        b[i] = cos(alpha) * sni - sin(alpha) * csi;
-    }
-
-    for (int j = 0; j < N; j++) {
-        A[N][j] = 0.0;
-    }
-
-
-    b[N] = 0.0;
-    A[N][0] = 1.0;
-    A[N][N] = 1.0;
-    
-
-}
-
-
-double getLiftCoefficient(PanelList *list, AerofoilInfo *info, double *p) {
+double getLiftCoefficient(PanelList *list, AerofoilInfo *info, double *cp, double alpha) {
     int N = list->num_panels; // number of panels
     int num_points = info->n; //  number of points
     double C_lift = 0;
     for (int i = 0; i < N; i++) {
-        Panel paneli = list->data[i];
-        double xi = paneli.pos0.x;
-        double xiplus1 = paneli.pos1.x;
 
-        C_lift += p[i] * ( xiplus1 - xi) ;
+        Panel paneli = list->data[i];
+        double beta = paneli.theta + M_PI /2 - alpha;
+        C_lift += cp[i] * paneli.len * sin (alpha - beta);
     }
 
     return C_lift;
 
 
 }
-
-void getPressureCoefficients2 (PanelList *list, AerofoilInfo *info, double *p, double *x, double V_inf, double alpha){
-    
-    int N = list->num_panels; // number of panels
-    int num_points = info->n; //  number of points
-    double xc, yc, dx, dy, theti, sni, csi, xt, yt, theta, cs, sn, csm, snm;
-    double x1, y1, x2, r1, r2, th1, th2, u1l, u2l, w1l, w2l, u1, u2, w1, w2, holda;
-
-
-    for (int i = 0; i < N; i++) {
-        Panel paneli = list->data[i];
-        double x0 = paneli.pos0.x;
-        double y0 = paneli.pos0.y;
-        double x1 = paneli.pos1.x;
-        double y1 = paneli.pos1.y;
-        xc = (x0 + x1) * 0.5;
-        yc = (y0 + y1) * 0.5;
-        dx = x1 - x0;
-        dy = y1 - y0;
-        theti = atan2(dy, dx);
-        sni = sin(theti);
-        csi = cos(theti);
-        double element = 0;
-
-        for (int j = 0; j < N; j++) {
-            Panel panelj = list->data[j];
-            double xj = panelj.pos0.x;
-            double yj = panelj.pos0.y;
-            xt = xc - xj;
-            yt = yc - yj;
-            dx = x1 - x0;
-            dy = y1 - y0;
-            theta = atan2(dy, dx);
-            cs = cos(theta);
-            sn = sin(theta);
-            csm = cos(-theta);
-            snm = sin(-theta);
-
-            x1 = xt * cs + yt * sn;
-            y1 = -xt * sn + yt * cs;
-            x2 = dx * cs + dy * sn;
-            r1 = sqrt(fabs(x1 * x1 + y1 * y1));
-            r2 = sqrt(fabs((x1 - x2) * (x1 - x2) + y1 * y1));
-            th1 = atan2(y1, x1);
-            th2 = atan2(y1, (x1 - x2));
-
-            if (i == j) {
-                u1l = -0.5 * (x1 - x2) / x2;
-                u2l = 0.5 * x1 / x2;
-                w1l = -0.15916;
-                w2l = 0.15916;
-            } else {
-                u1l = -(y1 * log(r2 / r1) + x1 * (th2 - th1) - x2 * (th2 - th1)) / (TWOPI * x2);
-                u2l = (y1 * log(r2 / r1) + x1 * (th2 - th1)) / (TWOPI * x2);
-                w1l = -((x2 - y1 * (th2 - th1)) - x1 * log(r1 / r2) + x2 * log(r1 / r2)) / (TWOPI * x2);
-                w2l = ((x2 - y1 * (th2 - th1)) - x1 * log(r1 / r2)) / (TWOPI * x2);
-            }
-
-            u1 = u1l * csm + w1l * snm;
-            u2 = u2l * csm + w2l * snm;
-            w1 = -u1l * snm + w1l * csm;
-            w2 = -u2l * snm + w2l * csm;
-
-            if (j == 0) {
-                element = 0;
-            }
-            else if (j == N) {
-                element = -u1 * sni + w1 * csi + holda;
-                element = -u2 * sni + w2 * csi;
-            }
-            else {
-                element +=  1;
-                holda = -u2 * sni + w2 * csi;
-            }
-        }
-
-        p[i] = element * x[i];
-        p[i] += cos(theti - alpha) * V_inf;
-        p[i] = 1 - pow( p[i] / V_inf, 2);
-
-        }
-    }
 
