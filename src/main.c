@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <unistd.h>
+// #include <unistd.h>
 #include "vector.h" 
 #include "utils.h" 
 // #include "math_utils.h" 
@@ -16,14 +16,14 @@ AerofoilInfo *loadAerofoil(const char *filename);
 
 int main() {
 
-	char cwd[1024]; // Buffer to store the current working directory
+	// char cwd[1024]; // Buffer to store the current working directory
 
-    if (getcwd(cwd, sizeof(cwd)) != NULL) {
-        printf("Current working directory: %s\n", cwd);
-    } else {
-        perror("getcwd() error");
-        return 1;
-    }
+    // if (getcwd(cwd, sizeof(cwd)) != NULL) {
+    //     printf("Current working directory: %s\n", cwd);
+    // } else {
+    //     perror("getcwd() error");
+    //     return 1;
+    // }
 
 	const char *filename = "../aerofoil_data/naca0012.dat";
 	// const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/usa51.dat";
