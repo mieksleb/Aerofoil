@@ -56,7 +56,7 @@ int main() {
     }
 
 	// Calculate matrix and vector elements
-	getInfluenceCoefficients (panelList, info, A, I, J, K, L, b, V_inf, alpha);
+	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
 
  	// Solve linear system
 	double *x = solveLinearSystem( A, b, n);
@@ -64,7 +64,7 @@ int main() {
 
 	// get the pressure coefficients
 	double *cp = (double *)malloc((N+1) * sizeof(double *));
-	getPressureCoefficients (panelList, info, J, L, cp, x, V_inf, alpha);
+	getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
 
 	   // Open a file for writing
     FILE *outputFile;

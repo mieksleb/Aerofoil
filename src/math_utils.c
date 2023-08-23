@@ -6,13 +6,11 @@
 #include "math_utils.h"
 
 
-void getInfluenceCoefficients (PanelList *list, AerofoilInfo *info, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha){
+void getInfluenceCoefficients (PanelList *list, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
-    int num_points = info->n; //  number of points
 
-
-    computeIJ( list, info, I, J , V_inf, alpha);
-    computeKL( list, info, K, L , V_inf, alpha);
+    computeIJ( list, I, J);
+    computeKL( list, K, L);
     double SUM2 = TWOPI;
     for (int i = 0; i < N; i++) {
 
@@ -59,9 +57,8 @@ void getInfluenceCoefficients (PanelList *list, AerofoilInfo *info, double **A, 
 
 
 
-void getPressureCoefficients (PanelList *list, AerofoilInfo *info, double **J, double **L, double *cp, double *x, double V_inf, double alpha){
+void getPressureCoefficients (PanelList *list, double **J, double **L, double *cp, double *x, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
-    int num_points = info->n; //  number of points
 
     for (int i = 0; i < N; i++) {
         Panel paneli = list->data[i];
@@ -88,16 +85,13 @@ void getPressureCoefficients (PanelList *list, AerofoilInfo *info, double **J, d
 
 
 
-void computeIJ( PanelList *list, AerofoilInfo *info, double **I, double **J , double V_inf, double alpha) {
+void computeIJ( PanelList *list, double **I, double **J ) {
     int N = list->num_panels; // number of panels
-    int num_points = info->n; //  number of points
 
     for (int i = 0; i < N; i++) {
 
         Panel paneli = list->data[i];
         Vector2D rc = paneli.mid;
-        Vector2D r1 = paneli.pos0;
-        Vector2D r2 = paneli.pos1;
         double xc = rc.x;
         double yc = rc.y;
         double dx = paneli.pos1.x - paneli.pos0.x;
@@ -147,9 +141,8 @@ void computeIJ( PanelList *list, AerofoilInfo *info, double **I, double **J , do
     }
 }
 
-void computeKL( PanelList *list, AerofoilInfo *info, double **K, double **L , double V_inf, double alpha) {
+void computeKL( PanelList *list, double **K, double **L) {
     int N = list->num_panels; // number of panels
-    int num_points = info->n; //  number of points
 
     for (int i = 0; i < N; i++) {
 

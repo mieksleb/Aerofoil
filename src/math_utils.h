@@ -11,10 +11,10 @@
 
 double dist2D(Vector2D v1, Vector2D v2);
 double *solveLinearSystem(double **A, double *b, int dim);
-void getInfluenceCoefficients (PanelList *list, AerofoilInfo *info, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha);
-void getPressureCoefficients (PanelList *list, AerofoilInfo *info,double **J, double **L, double *cp, double *x, double V_inf, double alpha);
+void getInfluenceCoefficients (PanelList *list, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha);
+void getPressureCoefficients (PanelList *list,double **J, double **L, double *cp, double *x, double V_inf, double alpha);
 double getLiftCoefficient(PanelList *list, AerofoilInfo *info, double *cp, double alpha);
 
-void computeIJ( PanelList *list, AerofoilInfo *info, double **I, double **J, double V_inf, double alpha);
-void computeKL( PanelList *list, AerofoilInfo *info, double **K, double **L, double V_inf, double alpha);
+void computeIJ( PanelList *list, double **I, double **J);
+void computeKL( PanelList *list, double **K, double **L);
 #endif // MATH_UTILS_H
