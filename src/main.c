@@ -17,7 +17,6 @@ int main() {
 
 	const char *filename = "../aerofoil_data/naca0012.dat";
 	// const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/usa51.dat";
-	printf("Loading Aerofoil data from file: %s\n", filename);
 
 	double V_inf = 1;
 	double alpha = 8 * M_PI / 180;

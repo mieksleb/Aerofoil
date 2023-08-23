@@ -17,7 +17,6 @@ typedef struct {
     double theta; // Panel orientation angle
     double len; // Panel length
     Vector2D mid; // Midpoint coordinates
-    Vector2D pos0prime; // rotatecoordinates of pos0
     double beta;
 } Panel;
 
