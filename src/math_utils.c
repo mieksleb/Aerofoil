@@ -219,6 +219,7 @@ double *solveLinearSystem(double **A, double *b, int dim) {
     
     for (int i = 0; i < dim; i++) {
         A_copy[i] = (double *)malloc(dim * sizeof(double));
+        printf("booper.\n");
         if (A_copy[i] == NULL) {
             printf("Memory allocation failed.\n");
             for (int j = 0; j < i; j++) {
