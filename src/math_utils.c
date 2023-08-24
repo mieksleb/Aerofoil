@@ -39,14 +39,16 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
                 A[i][j] = I[i][j];
             }
 
-            printf("%d %d %lf\n", i, j, A[i][j]);
-
         }
 
         A[i][N] = SUM1;
     }
     
-
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%d %d %lf\n", i,j, A[i][j]);
+        }
+    }
     A[N][N] = SUM2;
     Panel panel1 = list->data[0];
     Panel panelN = list->data[N-1];
