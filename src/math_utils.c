@@ -207,8 +207,8 @@ double *solveLinearSystem(double **A, double *b, int dim) {
     }
 
     // Create a local copy of the matrix A and vector b for modification
-    double **A_copy = (double **)malloc(dim * sizeof(double));
-    double *b_copy = (double *)malloc(dim * sizeof(double));
+    double **A_copy = (double **)malloc(dim * sizeof(double *));
+    double *b_copy = (double *)malloc(dim * sizeof(double *));
     if (A_copy == NULL || b_copy == NULL) {
         printf("Memory allocation failed.\n");
         free(x);
@@ -218,6 +218,7 @@ double *solveLinearSystem(double **A, double *b, int dim) {
     }
     
     for (int i = 0; i < dim; i++) {
+        printf("boop.\n");
         A_copy[i] = (double *)malloc(dim * sizeof(double));
         if (A_copy[i] == NULL) {
             printf("Memory allocation failed.\n");
