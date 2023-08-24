@@ -38,6 +38,7 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
             else{
                 A[i][j] = I[i][j];
             }
+            printf("%d %d %lf\n", i,j, A[i][j]);
 
         }
 
@@ -49,6 +50,7 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
             printf("%d %d %lf\n", i,j, A[i][j]);
         }
     }
+
     A[N][N] = SUM2;
     Panel panel1 = list->data[0];
     Panel panelN = list->data[N-1];
