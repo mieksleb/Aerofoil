@@ -50,10 +50,16 @@ int main() {
 		K[i] = (double *)malloc(N * sizeof(double));
 		L[i] = (double *)malloc(N * sizeof(double));
     }
+
+	// Check if memory allocation was successful
+	if (b == NULL || A == NULL || I == NULL || J == NULL || K == NULL || L == NULL) {
+		printf("Memory allocation failed.\n");
+	}
+
 	printf("chogolate\n");
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
-	printf("Chunkerzz: %lf \n",A[3][10]);
+	printf("Chunkerzz: %lf \n",I[3][10]);
 	printf("hot chogolate\n");
 
 
