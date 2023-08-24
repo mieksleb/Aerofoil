@@ -40,7 +40,7 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
             }
 
         }
-        if (i == 18) {
+        if (i == 17) {
             printf("%lf\n", A[2][1]);
             printf("%lf\n", A[3][10]);
         }
