@@ -31,6 +31,8 @@ int main(int argc, char *argv[]) {
 
 	double result = pow( alpha, 2 );
 	
+	printf("result: %lf\n", result);
+	
 // 	// Load aerofoil points in a VectorList
 // 	AerofoilInfo *info = loadAerofoil(filename);
 // 	int n = info->n;
