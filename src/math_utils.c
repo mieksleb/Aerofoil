@@ -201,14 +201,13 @@ void computeKL( PanelList *list, double **K, double **L) {
 double *solveLinearSystem(double **A, double *b, int dim) {
     // Allocate memory for vector x
     double *x = (double *)malloc(dim * sizeof(double));
-    printf("BELP.\n");
     if (x == NULL) {
         printf("Memory allocation failed.\n");
         return NULL;
     }
 
     // Create a local copy of the matrix A and vector b for modification
-    double **A_copy = (double **)malloc(dim * sizeof(double *));
+    double **A_copy = (double **)malloc(dim * sizeof(double));
     double *b_copy = (double *)malloc(dim * sizeof(double));
     if (A_copy == NULL || b_copy == NULL) {
         printf("Memory allocation failed.\n");
@@ -217,7 +216,6 @@ double *solveLinearSystem(double **A, double *b, int dim) {
         free(b_copy);
         return NULL;
     }
-    printf("Blep.\n");
     
     for (int i = 0; i < dim; i++) {
         A_copy[i] = (double *)malloc(dim * sizeof(double));

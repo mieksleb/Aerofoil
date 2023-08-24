@@ -55,7 +55,7 @@ int main() {
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
 	printf("hot chogolate\n");
  	// Solve linear system
-	double *x = solveLinearSystem( A, b, n);
+	double *x = solveLinearSystem( A, b, N+1);
 	printf("boiling chogolate\n");
 
 
