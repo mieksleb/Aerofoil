@@ -235,7 +235,7 @@ double *solveLinearSystem(double **A, double *b, int dim) {
 
         for (int j = 0; j < dim; j++) {
             printf("booper.\n");
-            printf("%d %d\n", i, j);
+            printf("%lf %d %d\n", A[i][j], i, j);
             A_copy[i][j] = A[i][j];
         }
         printf("boopee.\n");
