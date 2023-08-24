@@ -26,8 +26,8 @@ int main() {
 
 	// Convert into panel objects
 	PanelList *panelList = getPanelList(info);
-	printf("Number of panels: %d\n", panelList->num_panels);
 	int N = panelList->num_panels;
+		printf("Number of panels: %d\n", N);
 	for (int i = 0; i < N; i++) {
 		printf(" %lf %lf\n", panelList->data[i].pos0.x, panelList->data[i].pos0.y);
     }
@@ -55,6 +55,8 @@ int main() {
 	if (b == NULL || A == NULL || I == NULL || J == NULL || K == NULL || L == NULL) {
 		printf("Memory allocation failed.\n");
 	}
+
+	printf("Dooberson %lf\n", A[20][20]);
 
 	printf("chogolate\n");
 	// Calculate matrix and vector elements
