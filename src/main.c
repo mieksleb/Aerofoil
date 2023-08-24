@@ -61,20 +61,14 @@ for (int i = 0; i < N; i++) {
 
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
-	// printf("Chunkerzz: %lf \n", A[3][10]);
-	printf("hot chogolate\n");
-
 
  	// Solve linear system
 	double *x = solveLinearSystem( A, b, N+1);
-	printf("boiling chogolate\n");
-
 
 	// get the pressure coefficients
 	double *cp = (double *)malloc((N+1) * sizeof(double *));
-	printf("scaulding chogolate\n");
+
 	getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
-	printf("nuclear chogolate\n");
 
 	//    // Open a file for writing
     // FILE *outputFile;

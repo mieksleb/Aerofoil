@@ -9,7 +9,6 @@
 void getInfluenceCoefficients (PanelList *list, double **A, double **I, double **J, double **K, double **L, double *b, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
 
-    printf("%lf\n", A[0][0]);
     computeIJ( list, I, J);
     computeKL( list, K, L);
     double SUM2 = TWOPI;
@@ -42,11 +41,6 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
         }
 
         A[i][N] = SUM1;
-        printf("%d %lf\n", i, A[i][10]);
-    }
-
-    for (int i = 0; i < N; i++) {
-            printf("%d %lf\n", i, A[i][N]);
     }
 
     A[N][N] = SUM2;
@@ -249,7 +243,6 @@ for (int i = 0; i < dim; i++) {
 
     // Forward elimination
     for (int i = 0; i < dim - 1; i++) {
-        printf("%d\n", i);
         for (int j = i + 1; j < dim; j++) {
             double factor = A_copy[j][i] / A_copy[i][i];
             for (int k = i; k < dim; k++) {
@@ -267,8 +260,6 @@ for (int i = 0; i < dim; i++) {
         }
         x[i] /= A_copy[i][i];
     }
-
-    printf("Burp.\n");
 
     for (int i = 0; i < dim; i++) {
         free(A_copy[i]);
