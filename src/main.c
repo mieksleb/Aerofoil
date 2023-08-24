@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
 
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
-	printf("Test %lf: \n", I[10][20]);
+	printf("I%lf \n", I[10][20]);
 
  	// Solve linear system
 	double *x = solveLinearSystem( A, b, N+1);
@@ -84,6 +84,7 @@ int main(int argc, char *argv[]) {
 	double *cp = (double *)malloc((N+1) * sizeof(double *));
 
 	getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
+	printf("cp %lf \n", cp[10]);
 
 	//    // Open a file for writing
     // FILE *outputFile;
