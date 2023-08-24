@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include<uxhw.h>
 #include "vector.h" 
 #include "utils.h" 
 #include "math_utils.h" 
@@ -14,10 +15,32 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+
+	float samples[4][3] = {
+				{1.0, 2.0, 3.0},
+				{4.0, 5.0, 6.0},
+				{7.0, 8.0, 9.0},
+				{10.0, 11.0, 12.0}
+			};
+
+	float value[kSampleCardinality];
+
+	UxHwFloatDistFromMultidimensionalSamples(
+			value,
+			(void *) samples,
+			kSampleCount,
+			kSampleCardinality);
+
+	for (int i = 0; i < kSampleCardinality; i++)
+	{
+		printf("%f\n", value[i]);
+	}
+
     const char *filename = argv[1];
     double alpha = atof(argv[2]);
     double V_inf = atof(argv[3]);
     int uncertainties = atoi(argv[4]);
+
 
 
 	alpha *= M_PI / 180; // Convert to radians
@@ -31,12 +54,13 @@ int main(int argc, char *argv[]) {
 	// Convert into panel objects
 	PanelList *panelList = getPanelList(info);
 	int N = panelList->num_panels;
-		printf("Number of panels: %d\n", N);
-	for (int i = 0; i < N; i++) {
-		printf(" %lf %lf\n", panelList->data[i].pos0.x, panelList->data[i].pos0.y);
-    }
+	printf("Number of panels: %d\n", N);
 
-	printf(" %lf %lf\n", panelList->data[N-1].pos1.x, panelList->data[N-1].pos1.y);
+	// for (int i = 0; i < N; i++) {
+	// 	printf(" %lf %lf\n", panelList->data[i].pos0.x, panelList->data[i].pos0.y);
+    // }
+
+	// printf(" %lf %lf\n", panelList->data[N-1].pos1.x, panelList->data[N-1].pos1.y);
 
 // Create all matrices and vectors 
 double *b = (double *)malloc((N + 1) * sizeof(double)); // Corrected from double *
@@ -106,6 +130,9 @@ for (int i = 0; i < N; i++) {
 	free(L);
 	free(x);
 	free(b);
+
+
+
 
 
     return 0;

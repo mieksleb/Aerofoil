@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -DDEBUG
-LIBS = -lm
+LIBS = -lm -luxhw
 
 SRC = vector.c utils.c math_utils.c main.c
 OBJ = $(SRC:.c=.o)
