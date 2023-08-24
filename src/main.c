@@ -6,17 +6,21 @@
 #include "math_utils.h" 
 
 
-AerofoilInfo *loadAerofoil(const char *filename);
 
-int main() {
+int main(int argc, char *argv[]) {
+    // Check if the correct number of command-line arguments is provided
+    if (argc != 5) {
+        printf("Usage: %s <input_file> <alpha> <V_inf> <uncertainties>\n", argv[0]);
+        return 1;
+    }
+
+    const char *filename = argv[1];
+    double alpha = atof(argv[2]);
+    double V_inf = atof(argv[3]);
+    int uncertainties = atoi(argv[4]);
 
 
-	const char *filename = "naca0012.dat";
-	// const char *filename = "../aerofoil_data/naca0012.dat";
-	// const char *filename = "/Users/michaelselby/Aerofoil/aerofoil_data/usa51.dat";
-
-	double V_inf = 1;
-	double alpha = 8 * M_PI / 180;
+	alpha *= M_PI / 180; // Convert to radians
 	
 	// Load aerofoil points in a VectorList
 	AerofoilInfo *info = loadAerofoil(filename);
