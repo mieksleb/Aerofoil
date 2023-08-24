@@ -15,8 +15,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-
-	float samples[4][3] = {
+	int kSampleCount = 4;
+	int kSampleCardinality = 3;
+	float samples[kSampleCount][kSampleCardinality] = {
 				{1.0, 2.0, 3.0},
 				{4.0, 5.0, 6.0},
 				{7.0, 8.0, 9.0},
