@@ -58,7 +58,6 @@ int main() {
 
 	printf("Dooberson %lf\n", A[20][20]);
 
-	printf("chogolate\n");
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
 	// printf("Chunkerzz: %lf \n", A[3][10]);

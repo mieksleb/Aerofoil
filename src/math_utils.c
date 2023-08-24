@@ -39,7 +39,7 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
                 A[i][j] = I[i][j];
             }
 
-            printf("%d %d %lf\n", i, j, I[i][j]);
+            printf("%d %d %lf\n", i, j, A[i][j]);
 
         }
 
