@@ -38,9 +38,8 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
                 A[i][j] = M_PI;
             }
             else{
-                printf("%d %d %lf\n", i ,j, I[i][j]);
                 A[i][j] = I[i][j];
-                printf("%d %d %lf\n", i ,j, A[i][j]);
+                printf("%d %d %lf %lf\n", i ,j, I[i][j], A[i][j]);
             }
 
         }
@@ -241,8 +240,6 @@ double *solveLinearSystem(double **A, double *b, int dim) {
         }
 
         for (int j = 0; j < dim; j++) {
-            printf("booper.\n");
-            printf("%lf %d %d\n", A[i][j], i, j);
             A_copy[i][j] = A[i][j];
         }
         printf("boopee.\n");
