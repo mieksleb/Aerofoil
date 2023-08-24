@@ -11,6 +11,8 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
 
     computeIJ( list, I, J);
     computeKL( list, K, L);
+    printf("%lf %lf %lf %lf \n",I[10,20],J[10,20],K[10,20], L[10,20]);
+
     double SUM2 = TWOPI;
     for (int i = 0; i < N; i++) {
 
@@ -29,7 +31,6 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
 
         for (int j = 0; j < N; j++) {
 
-            printf("%d %d\n", i ,j);
 
             SUM1 += - K[i][j];
 
@@ -37,7 +38,9 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
                 A[i][j] = M_PI;
             }
             else{
+                printf("%d %d %lf\n", i ,j, I[i][j]);
                 A[i][j] = I[i][j];
+                printf("%d %d %lf\n", i ,j, A[i][j]);
             }
 
         }
