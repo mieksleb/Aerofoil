@@ -54,7 +54,8 @@ int main() {
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
 	printf("hot chogolate\n");
-	printf("%lf %lf %lf %lf %lf \n", A[10,20],I[10,20],J[10,20],K[10,20], L[10,20]);
+
+
  	// Solve linear system
 	double *x = solveLinearSystem( A, b, N+1);
 	printf("boiling chogolate\n");

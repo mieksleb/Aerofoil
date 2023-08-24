@@ -51,6 +51,8 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I,double **
     double betaN = panelN.theta + M_PI /2 - alpha;
 
     b[N] = - V_inf * TWOPI * ( sin( beta1) +  sin( betaN));
+    printf("%lf %lf %lf %lf %lf \n", A[10,20],I[10,20],J[10,20],K[10,20], L[10,20]);
+
 
 
 }
