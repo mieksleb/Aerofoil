@@ -9,6 +9,7 @@
 void getInfluenceCoefficients (PanelList *list, double **A, double **I, double **J, double **K, double **L, double *b, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
 
+    printf("Chunkerimo: %lf \n", A[3][10]);
     computeIJ( list, I, J);
     computeKL( list, K, L);
 
@@ -48,6 +49,8 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
     A[N][N] = SUM2;
     Panel panel1 = list->data[0];
     Panel panelN = list->data[N-1];
+
+    printf("Chunkerzz: %lf \n", A[3][10]);
 
     double beta1 = panel1.theta + M_PI /2 - alpha;
     double betaN = panelN.theta + M_PI /2 - alpha;
