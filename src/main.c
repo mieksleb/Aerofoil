@@ -59,7 +59,7 @@ int main() {
 	printf("chogolate\n");
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
-	printf("Chunkerzz: %lf \n",I[3][10]);
+	printf("Chunkerzz: %lf %lf %lf %lf \n",I[3][10],J[3][10],K[3][10],L[3][10]);
 	printf("hot chogolate\n");
 
 
