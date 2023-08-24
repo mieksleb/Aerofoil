@@ -9,7 +9,7 @@
 void getInfluenceCoefficients (PanelList *list, double **A, double **I, double **J, double **K, double **L, double *b, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
 
-
+    printf("%lf\n", A[0][0]);
     computeIJ( list, I, J);
     computeKL( list, K, L);
     double SUM2 = TWOPI;
