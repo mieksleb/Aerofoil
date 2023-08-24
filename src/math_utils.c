@@ -45,7 +45,7 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
         printf("%d %lf\n", i, A[i][N]);
     }
 
-    
+    printf("chuber %lf\n", A[0][0]);
     for (int i = 0; i < N; i++) {
             printf("%d %lf\n", i, A[i][N]);
     }
