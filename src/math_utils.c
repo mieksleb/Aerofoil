@@ -11,7 +11,6 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
 
     computeIJ( list, I, J);
     computeKL( list, K, L);
-    printf("Chunkerino: %lf %lf \n",I[3][10],J[3][10]);
 
     double SUM2 = TWOPI;
     for (int i = 0; i < N; i++) {
@@ -142,7 +141,7 @@ void computeIJ( PanelList *list, double **I, double **J ) {
             }
         }
     }
-    printf("Chunkerzz: %lf %lf \n",I[3][10],J[3][10]);
+
 }
 
 void computeKL( PanelList *list, double **K, double **L) {
@@ -198,7 +197,6 @@ void computeKL( PanelList *list, double **K, double **L) {
             }
         }
     }
-    printf("Chunkerzz: %lf %lf \n",K[3][10],L[3][10]);
 
 }
 
