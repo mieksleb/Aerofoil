@@ -11,7 +11,7 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
 
     computeIJ( list, I, J);
     computeKL( list, K, L);
-    printf("%lf %lf %lf %lf \n",I[10,20],J[10,20],K[10,20], L[10,20]);
+    printf("Chunkerino: %lf %lf \n",I[3][10],J[3][10]);
 
     double SUM2 = TWOPI;
     for (int i = 0; i < N; i++) {
@@ -54,7 +54,6 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
     double betaN = panelN.theta + M_PI /2 - alpha;
 
     b[N] = - V_inf * TWOPI * ( sin( beta1) +  sin( betaN));
-    printf("%lf %lf %lf %lf %lf \n", A[10,20],I[10,20],J[10,20],K[10,20], L[10,20]);
 
 
 
@@ -143,6 +142,7 @@ void computeIJ( PanelList *list, double **I, double **J ) {
             }
         }
     }
+    printf("Chunkerzz: %lf %lf \n",I[3][10],J[3][10]);
 }
 
 void computeKL( PanelList *list, double **K, double **L) {
@@ -198,6 +198,7 @@ void computeKL( PanelList *list, double **K, double **L) {
             }
         }
     }
+    printf("Chunkerzz: %lf %lf \n",K[3][10],L[3][10]);
 
 }
 
