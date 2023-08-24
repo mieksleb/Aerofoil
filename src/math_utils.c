@@ -218,7 +218,6 @@ double *solveLinearSystem(double **A, double *b, int dim) {
     }
     
     for (int i = 0; i < dim; i++) {
-        printf("boop.\n");
         A_copy[i] = (double *)malloc(dim * sizeof(double));
         if (A_copy[i] == NULL) {
             printf("Memory allocation failed.\n");
@@ -235,10 +234,12 @@ double *solveLinearSystem(double **A, double *b, int dim) {
         }
         b_copy[i] = b[i];
     }
+
     printf("boop.\n");
 
     // Forward elimination
     for (int i = 0; i < dim - 1; i++) {
+        printf("%d\n", i);
         for (int j = i + 1; j < dim; j++) {
             double factor = A_copy[j][i] / A_copy[i][i];
             for (int k = i; k < dim; k++) {
