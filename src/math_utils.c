@@ -39,11 +39,10 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
                 A[i][j] = I[i][j];
             }
 
+            printf("%d %d %lf\n", i, j, I[i][j]);
+
         }
-        if (i == 18) {
-            printf("%lf\n", I[10][20]);
-            printf("%lf\n", A[N][i]);
-        }
+
         A[i][N] = SUM1;
     }
     
@@ -245,11 +244,8 @@ double *solveLinearSystem(double **A, double *b, int dim) {
         for (int j = 0; j < dim; j++) {
             A_copy[i][j] = A[i][j];
         }
-        printf("boopee.\n");
         b_copy[i] = b[i];
     }
-
-    printf("boop.\n");
 
     // Forward elimination
     for (int i = 0; i < dim - 1; i++) {
