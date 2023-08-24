@@ -109,7 +109,7 @@ void computeIJ( PanelList *list, double **I, double **J ) {
                 double yb = rj.y;
                 double lj = panelj.len;
 
-                double A = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
+                double A0 = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
                 double B = pow (xc - xb, 2) + pow (yc - yb, 2);
                 double Cn = sin (thetai - thetaj);
                 double Dn = - ( xc - xb ) * sin (thetai) + (yc - yb) * cos (thetai);
@@ -117,19 +117,19 @@ void computeIJ( PanelList *list, double **I, double **J ) {
                 double Dt = ( xc  - xb ) * cos (thetai) + (yc - yb) * sin (thetai);
 
 
-                if (B - pow (A,2) <= 0 ) {
+                if (B - pow (A0,2) <= 0 ) {
                     I[i][j] = 0;
                     J[i][j] = 0;
                 }
                 else {
-                    double E = pow ( B - pow (A,2) , 0.5);
-                    double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
-                    double term2 = ( ( Dn - A * Cn ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    double E = pow ( B - pow (A0,2) , 0.5);
+                    double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A0 * lj + B ) / B  );
+                    double term2 = ( ( Dn - A0 * Cn ) / E ) * ( atan2 (lj + A0, E) - atan2 (A0, E) );
                     I[i][j] = term1 + term2; 
 
 
-                    double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
-                    double term4 = ( ( Dt - A * Ct ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A0 * lj + B ) / B  );
+                    double term4 = ( ( Dt - A0 * Ct ) / E ) * ( atan2 (lj + A0, E) - atan2 (A0, E) );
                     J[i][j] = term3 + term4; 
 
                 }
@@ -167,25 +167,25 @@ void computeKL( PanelList *list, double **K, double **L) {
                 double yb = rj.y;
                 double lj = panelj.len;
 
-                double A = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
+                double A0 = - ( xc - xb ) * cos (thetaj) - ( yc - yb ) * sin (thetaj);
                 double B = pow (xc - xb, 2) + pow (yc - yb, 2);
                 double Cn = - cos (thetai - thetaj);
                 double Dn = ( xc - xb ) * cos (thetai) + (yc - yb) * sin (thetai);
                 double Ct =  - sin (thetai - thetaj);
                 double Dt = ( xc  - xb ) * sin (thetai) - (yc - yb) * cos (thetai);
-                if (B - pow (A,2) <= 0 ) {
+                if (B - pow (A0,2) <= 0 ) {
                     K[i][j] = 0;
                     L[i][j] = 0;
                 }
                 else {
-                    double E = pow ( B - pow (A,2) , 0.5);
-                    double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
-                    double term2 = ( ( Dn - A * Cn ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    double E = pow ( B - pow (A0,2) , 0.5);
+                    double term1 = 0.5 * Cn * log ( ( pow ( lj , 2) + 2 * A0 * lj + B ) / B  );
+                    double term2 = ( ( Dn - A0 * Cn ) / E ) * ( atan2 (lj + A0, E) - atan2 (A0, E) );
                     K[i][j] = term1 + term2; 
                      
 
-                    double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A * lj + B ) / B  );
-                    double term4 = ( ( Dt - A * Ct ) / E ) * ( atan2 (lj + A, E) - atan2 (A, E) );
+                    double term3 = 0.5 * Ct * log ( ( pow ( lj , 2) + 2 * A0 * lj + B ) / B  );
+                    double term4 = ( ( Dt - A0 * Ct ) / E ) * ( atan2 (lj + A0, E) - atan2 (A0, E) );
                     L[i][j] = term3 + term4; 
 
                 }
