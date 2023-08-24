@@ -108,14 +108,14 @@ int main(int argc, char *argv[]) {
 
 
 
-	free(cp);
-	free(A);
-	free(I);
-	free(J);
-	free(K);
-	free(L);
-	free(x);
-	free(b);
+	// free(cp);
+	// free(A);
+	// free(I);
+	// free(J);
+	// free(K);
+	// free(L);
+	// free(x);
+	// free(b);
 
 
 

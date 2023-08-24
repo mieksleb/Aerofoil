@@ -318,6 +318,17 @@ double getLiftCoefficient(PanelList *list, double alpha, double V_inf) {
         C_lift += cp[i] * paneli.len * sin (alpha - beta);
     }
 
+
+    	
+    free(cp);
+	free(A);
+	free(I);
+	free(J);
+	free(K);
+	free(L);
+	free(x);
+	free(b);
+    
     return C_lift;
 
 
