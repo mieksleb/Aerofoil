@@ -15,36 +15,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-	int kSampleCount = 4;
-	int kSampleCardinality = 3;
-	float samples[kSampleCount][kSampleCardinality] = {
-				{1.0, 2.0, 3.0},
-				{4.0, 5.0, 6.0},
-				{7.0, 8.0, 9.0},
-				{10.0, 11.0, 12.0}
-			};
-
-	float value[kSampleCardinality];
-
-	UxHwFloatDistFromMultidimensionalSamples(
-			value,
-			(void *) samples,
-			kSampleCount,
-			kSampleCardinality);
-
-	for (int i = 0; i < kSampleCardinality; i++)
-	{
-		printf("%f\n", value[i]);
-	}
 
     const char *filename = argv[1];
-    double alpha = atof(argv[2]);
+    double alpha_mean = atof(argv[2]);
     double V_inf = atof(argv[3]);
     int uncertainties = atoi(argv[4]);
 
 
 
-	alpha *= M_PI / 180; // Convert to radians
+	alpha_mean *= M_PI / 180; // Convert to radians
+
+	double alphas = UxHwDoubleGaussDist(alpha_mean, 0.1);
+
+	printf("alphas: %lf", alphas);
+
 	
 	// Load aerofoil points in a VectorList
 	AerofoilInfo *info = loadAerofoil(filename);
