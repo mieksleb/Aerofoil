@@ -59,8 +59,6 @@ for (int i = 0; i < N; i++) {
 		printf("Memory allocation failed.\n");
 	}
 
-	printf("Dooberson %lf\n", A[20][20]);
-
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
 	// printf("Chunkerzz: %lf \n", A[3][10]);

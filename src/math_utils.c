@@ -43,10 +43,8 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
 
         A[i][N] = SUM1;
         printf("%d %lf\n", i, A[i][10]);
-        printf("chuberr\n");
     }
 
-    printf("chuber\n");
     for (int i = 0; i < N; i++) {
             printf("%d %lf\n", i, A[i][N]);
     }
@@ -54,8 +52,6 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
     A[N][N] = SUM2;
     Panel panel1 = list->data[0];
     Panel panelN = list->data[N-1];
-
-    printf("Chunkerzz: %lf \n", A[3][10]);
 
     double beta1 = panel1.theta + M_PI /2 - alpha;
     double betaN = panelN.theta + M_PI /2 - alpha;
@@ -219,12 +215,12 @@ double *solveLinearSystem(double **A, double *b, int dim) {
     }
 
     // Create a local copy of the matrix A and vector b for modification
-    double **A_copy = (double **)malloc(dim * sizeof(double *));
-    double *b_copy = (double *)malloc(dim * sizeof(double *));
+double *b_copy = (double *)malloc(dim * sizeof(double)); // Corrected from double *
+double **A_copy = (double **)malloc(dim * sizeof(double *)); // Corrected from double **
 
-    for (int i = 0; i < dim; i++) {
-        A_copy[i] = (double *)malloc(dim * sizeof(double));
-    }
+for (int i = 0; i < dim; i++) {
+    A_copy[i] = (double *)malloc(dim * sizeof(double));
+}
     if (A_copy == NULL || b_copy == NULL) {
         printf("Memory allocation failed.\n");
         free(x);
