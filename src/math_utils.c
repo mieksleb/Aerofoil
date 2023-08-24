@@ -6,7 +6,7 @@
 #include "math_utils.h"
 
 
-void getInfluenceCoefficients (PanelList *list, double **A, double **I,double **J,double **K, double **L, double *b, double V_inf, double alpha){
+void getInfluenceCoefficients (PanelList *list, double **A, double **I, double **J, double **K, double **L, double *b, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
 
     computeIJ( list, I, J);
@@ -28,6 +28,8 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I,double **
         }
 
         for (int j = 0; j < N; j++) {
+
+            printf("%d %d\n", i ,j);
 
             SUM1 += - K[i][j];
 
