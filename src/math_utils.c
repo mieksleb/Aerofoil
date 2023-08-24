@@ -9,7 +9,7 @@
 void getInfluenceCoefficients (PanelList *list, double **A, double **I, double **J, double **K, double **L, double *b, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
 
-    
+
     computeIJ( list, I, J);
     computeKL( list, K, L);
     double SUM2 = TWOPI;
@@ -30,7 +30,6 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
 
         for (int j = 0; j < N; j++) {
 
-
             SUM1 += - K[i][j];
 
             if ( i == j ) {
@@ -41,7 +40,10 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
             }
 
         }
-        printf("Chunkerhound: %d %lf \n", i,  A[3][10]);
+        if (i == 18) {
+            printf("%lf\n", A[2][1]);
+            printf("%lf\n", A[3][10]);
+        }
         A[i][N] = SUM1;
     }
     
