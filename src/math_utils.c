@@ -201,6 +201,7 @@ void computeKL( PanelList *list, double **K, double **L) {
 double *solveLinearSystem(double **A, double *b, int dim) {
     // Allocate memory for vector x
     double *x = (double *)malloc(dim * sizeof(double));
+    printf("BELP.\n");
     if (x == NULL) {
         printf("Memory allocation failed.\n");
         return NULL;
@@ -216,6 +217,7 @@ double *solveLinearSystem(double **A, double *b, int dim) {
         free(b_copy);
         return NULL;
     }
+    printf("Blep.\n");
     
     for (int i = 0; i < dim; i++) {
         A_copy[i] = (double *)malloc(dim * sizeof(double));
@@ -234,6 +236,7 @@ double *solveLinearSystem(double **A, double *b, int dim) {
         }
         b_copy[i] = b[i];
     }
+    printf("boop.\n");
 
     // Forward elimination
     for (int i = 0; i < dim - 1; i++) {
@@ -254,6 +257,8 @@ double *solveLinearSystem(double **A, double *b, int dim) {
         }
         x[i] /= A_copy[i][i];
     }
+
+    printf("Burp.\n");
 
     for (int i = 0; i < dim; i++) {
         free(A_copy[i]);
