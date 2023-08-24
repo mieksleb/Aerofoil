@@ -79,10 +79,10 @@ int main(int argc, char *argv[]) {
 
  	// Solve linear system
 	double *x = solveLinearSystem( A, b, N+1);
-
+	printf("shneb\n");
 	// get the pressure coefficients
-	double *cp = (double *)malloc((N+1) * sizeof(double *));
-
+	double *cp = (double *)malloc( N * sizeof(double)); 
+	printf("shneb\n");
 	getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
 	printf("cp %lf \n", cp[10]);
 
