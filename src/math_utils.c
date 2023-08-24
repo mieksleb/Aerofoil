@@ -42,7 +42,7 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
         }
 
         A[i][N] = SUM1;
-        printf("%d %lf\n", i, A[i][N]);
+        printf("%d %lf\n", i, A[i][10]);
         printf("chuberr\n");
     }
 
