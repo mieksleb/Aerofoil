@@ -40,9 +40,9 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
             }
 
         }
-        if (i == 17) {
-            printf("%lf\n", A[2][1]);
-            printf("%lf\n", A[3][10]);
+        if (i == 18) {
+            printf("%lf\n", I[10][20]);
+            printf("%lf\n", A[N][i]);
         }
         A[i][N] = SUM1;
     }
