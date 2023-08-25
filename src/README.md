@@ -49,6 +49,7 @@ A_{N+1,N+1}=\frac{1}{2\pi}\sum_{j=1}^{N}\bigg[\sin\theta_{1,j}\ln\left(\frac{r_{
 $$
 
 The final element of $b$ is 
+
 $$
 b_{N+1}=-V_{\infty}\cos\left(\theta_{1}-\alpha\right)-V_{\infty}\left(\cos\theta_{N}-\alpha\right).
 $$
