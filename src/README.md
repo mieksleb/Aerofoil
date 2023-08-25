@@ -34,6 +34,7 @@ A_{N+1,j}=\frac{1}{2\pi}\bigg[\sin\theta_{i,j}\beta_{1,j}+\sin\theta_{N,J}\beta_
 $$
 
 And finally the bottom right element is
+
 $$
 \begin{align}
 A_{N+1,N+1}=\frac{1}{2\pi}\sum_{j=1}^{N}\bigg[\sin\theta_{1,j}\ln\left(\frac{r_{1,j+1}}{r_{1,j}}\right)+\sin\theta_{N,j}\ln\left(\frac{r_{N,j+1}}{r_{N,j}}\right)\nonumber\\+\cos\theta_{1,j}\beta_{1,j}+\cos\theta_{N,j}\beta_{N,j}\bigg].\nonumber
