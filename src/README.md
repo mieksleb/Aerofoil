@@ -17,7 +17,10 @@ The inner $N\times N$ matrix elements are given by [[1]](chrome-extension://efai
 $$A_{i,j}=\frac{1}{2\pi}\sin\left(\theta_{i}-\theta_{j}\right)\ln\left(\frac{r_{i,j+1}}{r_{i,j}}\right)+\frac{1}{2\pi}\cos\left(\theta_{i}-\theta_{j}\right)\beta_{i,j}.$$
 
 The $(N+1)^{\text{th}}$ column entries are given by 
-$$ A_{i,N+1}=\frac{1}{2\pi}\sum_{j=1}^{N}\left[\cos\left(\theta_{i}-\theta_{j}\right)\ln\left(\frac{r_{i,j+1}}{r_{i,j}}\right)-\sin\left(\theta_{i}-\theta_{j}\right)\beta_{i,j}\right].$$ 
+
+$$
+A_{i,N+1}=\frac{1}{2\pi}\sum_{j=1}^{N}\left[\cos\left(\theta_{i}-\theta_{j}\right)\ln\left(\frac{r_{i,j+1}}{r_{i,j}}\right)-\sin\left(\theta_{i}-\theta_{j}\right)\beta_{i,j}\right].
+$$ 
 
 The first $N$ elements of the vector $x$ are given by 
 $$
