@@ -1,24 +1,24 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <uxhw.h>
 #include "vector.h" 
 #include "utils.h" 
 #include "math_utils.h" 
 
 
+
 int main(int argc, char *argv[]) {
     // Check if the correct number of command-line arguments is provided
-    if (argc != 4) {
-        printf("Usage: %s <input_file> <alpha> <alpha_std>\n", argv[0]);
+    if (argc != 3) {
+        printf("Usage: %s <input_file> <alpha> \n", argv[0]);
         return 1;
     }
 
     const char *filename = argv[1];
-    double alpha_mean = atof(argv[2]);
-	double alpha_std = atof(argv[3]);
+    double alpha = atof(argv[2]);
 
 	double V_inf = 1;
+
 
 	
 	// Load aerofoil points in a VectorList
@@ -33,9 +33,8 @@ int main(int argc, char *argv[]) {
 	printf("Number of panels: %d\n", N);
 
 
-	alpha_mean *= M_PI / 180; // Convert to radians
+	alpha *= M_PI / 180; // Convert to radians
 
-	double alpha = UxHwDoubleGaussDist(alpha_mean, alpha_std);
 
 	printf("alpha: %lf\n", alpha);
 
@@ -78,12 +77,7 @@ int main(int argc, char *argv[]) {
 	double C_lift = getLiftCoefficient(panelList, cp, alpha);
 	printf("Lift coefficient: %lf\n", C_lift);
 
-	double expected = UxHwDoubleNthMoment(C_lift, 1);
-    double std = sqrt(UxHwDoubleNthMoment(C_lift, 2) - pow(UxHwDoubleNthMoment(C_lift, 1),2));
 
-	printf("E[C_lift] = %lf\n", expected);
-
-	printf("σ[C_lift] = %lf\n", std);
 
 
 	free(cp);

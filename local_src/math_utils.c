@@ -5,15 +5,13 @@
 #include "utils.h"
 #include "math_utils.h"
 
-/// Calculates the influence coefficients A,I,J,K,L,b (see readme for definitions)
+
 void getInfluenceCoefficients (PanelList *list, double **A, double **I, double **J, double **K, double **L, double *b, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
 
     computeIJ( list, I, J);
     computeKL( list, K, L);
     double SUM2 = TWOPI;
-
-    // Loop through each panel
     for (int i = 0; i < N; i++) {
 
         double SUM1 = 0;
@@ -59,11 +57,10 @@ void getInfluenceCoefficients (PanelList *list, double **A, double **I, double *
 }
 
 
-// computes cp, the surface pressure coefficients given the influence coefficients
+
 void getPressureCoefficients (PanelList *list, double **J, double **L, double *cp, double *x, double V_inf, double alpha){
     int N = list->num_panels; // number of panels
 
-    // Loop through each panel
     for (int i = 0; i < N; i++) {
         Panel paneli = list->data[i];
 
@@ -87,17 +84,16 @@ void getPressureCoefficients (PanelList *list, double **J, double **L, double *c
 
 }
 
-// computes the matrices I and J as defined in Anderson (see readme)
+
 void computeIJ( PanelList *list, double **I, double **J ) {
     int N = list->num_panels; // number of panels
 
-    // Loop through each panel
     for (int i = 0; i < N; i++) {
 
         Panel paneli = list->data[i];
         Vector2D rc = paneli.mid;
-        double xc = rc.x;   // x control point
-        double yc = rc.y;   // y control point
+        double xc = rc.x;
+        double yc = rc.y;
         double dx = paneli.pos1.x - paneli.pos0.x;
         double dy = paneli.pos1.y - paneli.pos0.y;
         double thetai = atan2( dy, dx);
@@ -146,7 +142,6 @@ void computeIJ( PanelList *list, double **I, double **J ) {
 
 }
 
-// computes the matrices K and L as defined in Anderson (see readme)
 void computeKL( PanelList *list, double **K, double **L) {
     int N = list->num_panels; // number of panels
 
@@ -204,7 +199,7 @@ void computeKL( PanelList *list, double **K, double **L) {
 }
 
 
-// solves linear system of equations Ax=b via Gaussian elimination
+// solves Ax=b
 double *solveLinearSystem(double **A, double *b, int dim) {
     // Allocate memory for vector x
     double *x = (double *)malloc(dim * sizeof(double));
@@ -276,12 +271,10 @@ for (int i = 0; i < dim; i++) {
 }
 
 
-// calculates the lift coefficient from formula (see readme)
+
 double getLiftCoefficient(PanelList *list, double *cp, double alpha) {
     int N = list->num_panels; // number of panels
     double C_lift = 0;
-
-    // Loop through panels
     for (int i = 0; i < N; i++) {
 
         Panel paneli = list->data[i];
