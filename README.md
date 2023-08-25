@@ -8,7 +8,7 @@ This package contains a C-program that determines the lift coefficient $C_L$ of 
 
 A more detailed description for the Hess-Smith panel method can be found [here](src/README.md). There are two versions of the aerofoil program, one for local use, and the other for the use on the Signaloid platform.
 
-![Alt Text](schematic.png)
+![Alt Text](images/schematic.jpeg)
 
 
 # Local Compilation
@@ -45,11 +45,11 @@ Any print statments of variables defined as distributions automatically produce 
 # Uncertainty Results
 
 The most relevant work on uncertainty in the angle of attack measurement is that of Paschereit _et al._ [[2]](https://wes.copernicus.org/articles/5/1771/2020/). In said paper, uncertainty ranges for various values of $\alpha$ are given based on the surface pressure measurement method, e.g. for some standard conditions they report $\alpha=7.3^{\circ}\pm0.2^{\circ}$. It is not described explicitly how these values are distributed but it is shown that $\alpha$ is approximately bell-shaped with repsect to the roll $\phi$ and so we will make the assumption that the distribution in $\alpha$ is Gaussian in nature. Choosing a mean value of $\left<\alpha\right>=7.3^{\circ}$ and a standard deviation of $\sigma_{\alpha}=0.2^{\circ}$, the $\alpha$ distribution outputted by the Signaloid processor was:
-![Alt Text](alpha_dist.png)
+![Alt Text](images/alpha_dist.png)
 
 The corresponding output for $C_L$ was:
 
-![Alt Text](c_lift_dist.png)
+![Alt Text](images/c_lift_dist.png)
 
 The mean and standard deviation of $C_L$ were calculated using the **UxHwDoubleNthMoment** function to calculate the first two moments.
 ```c
