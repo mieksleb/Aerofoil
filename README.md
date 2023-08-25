@@ -9,6 +9,7 @@ This package contains a C-program that determines the lift coefficient $C_L$ of 
 A more detailed description for the Hess-Smith panel method can be found [here](src/README.md). There are two versions of the aerofoil program, one for local use, and the other for the use on the Signaloid platform.
 
 Below is a schematic diagram of the Naca0012 aerofoil with angle of attack $\alpha$.
+
 ![aerofoil](images/schematic.jpeg)
 
 
