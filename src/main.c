@@ -80,6 +80,13 @@ int main(int argc, char *argv[]) {
 	double C_lift = getLiftCoefficient(panelList, cp, alpha);
 	printf("Lift coefficient: %lf\n", C_lift);
 
+	double expected = UxHwDoubleNthMoment(C_lift, 1);
+    double std = sqrt(UxHwDoubleNthMoment(C_lift, 2));
+
+	printf("E[C_lift] = %lf\n", expected);
+
+	printf("σ[C_lift] = %lf\n", std);
+
 
 
 
