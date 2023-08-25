@@ -10,16 +10,16 @@
 
 int main(int argc, char *argv[]) {
     // Check if the correct number of command-line arguments is provided
-    if (argc != 5) {
-        printf("Usage: %s <input_file> <alpha> <V_inf> <uncertainties>\n", argv[0]);
+    if (argc != 4) {
+        printf("Usage: %s <input_file> <alpha> <alpha_std>\n", argv[0]);
         return 1;
     }
 
-
     const char *filename = argv[1];
     double alpha_mean = atof(argv[2]);
-    double V_inf = atof(argv[3]);
-    int uncertainties = atoi(argv[4]);
+	double alpha_std = atof(argv[3]);
+
+	double V_inf = 1;
 
 
 	
@@ -37,16 +37,9 @@ int main(int argc, char *argv[]) {
 
 	alpha_mean *= M_PI / 180; // Convert to radians
 
-	double alpha = UxHwDoubleGaussDist(alpha_mean, 0.1);
+	double alpha = UxHwDoubleGaussDist(alpha_mean, alpha_std);
 
 	printf("alpha: %lf\n", alpha);
-
-
-	// for (int i = 0; i < N; i++) {
-	// 	printf(" %lf %lf\n", panelList->data[i].pos0.x, panelList->data[i].pos0.y);
-    // }
-
-	// printf(" %lf %lf\n", panelList->data[N-1].pos1.x, panelList->data[N-1].pos1.y);
 
 	// Create all matrices and vectors 
 	double *b = (double *)malloc((N + 1) * sizeof(double)); // Corrected from double *
@@ -75,34 +68,14 @@ int main(int argc, char *argv[]) {
 
 	// Calculate matrix and vector elements
 	getInfluenceCoefficients (panelList, A, I, J, K, L, b, V_inf, alpha);
-	printf("I%lf \n", I[10][20]);
 
  	// Solve linear system
 	double *x = solveLinearSystem( A, b, N+1);
-	printf("shneb\n");
+
 	// get the pressure coefficients
 	double *cp = (double *)malloc( N * sizeof(double)); 
-	printf("shneb\n");
+
 	getPressureCoefficients (panelList, J, L, cp, x, V_inf, alpha);
-	printf("cp %lf \n", cp[10]);
-
-	//    // Open a file for writing
-    // FILE *outputFile;
-    // outputFile = fopen("pressure_coefficients.txt", "w");
-
-    // // Check if the file opened successfully
-    // if (outputFile == NULL) {
-    //     perror("Error opening the file");
-    //     return 1; // Exit with an error code
-    // }
-
-//     // // Write the values to the file
-    // for (int i = 0; i < N; i++) {
-    //     fprintf(outputFile, "%lf %lf\n", panelList->data[i].mid.x, cp[i]);
-    // }
-
-    // // Close the file
-    // fclose(outputFile);
 
 	double C_lift = getLiftCoefficient(panelList, cp, alpha);
 	printf("Lift coefficient: %lf\n", C_lift);
