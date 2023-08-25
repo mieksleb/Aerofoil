@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
 	printf("Lift coefficient: %lf\n", C_lift);
 
 	double expected = UxHwDoubleNthMoment(C_lift, 1);
-    double std = sqrt(UxHwDoubleNthMoment(C_lift, 2));
+    double std = sqrt(UxHwDoubleNthMoment(C_lift, 2) - pow(UxHwDoubleNthMoment(C_lift, 1),2));
 
 	printf("E[C_lift] = %lf\n", expected);
 

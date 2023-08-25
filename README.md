@@ -45,7 +45,10 @@ Any print statments of variables defined as distributions automatically produce 
 # Uncertainty Results
 
 The most relevant work on uncertainty in the angle of attack measurement is that of Paschereit _et al._ [[2]](https://wes.copernicus.org/articles/5/1771/2020/). In said paper uncertainty ranges for various values of $\alpha$ are given base on the surface pressure measurement method, e.g. for some standard conditions they report $\alpha=7.3^{\circ}\pm0.2^{\circ}$. It is not described explicitly how these values are distributed but it is shown that $\alpha$ is approximately bell-shaped with repsect to the roll $\phi$ and so we will make the assumption that the distribution in $\alpha$ is Gaussian in nature. Choosing a mean value of $\bar{\alpha}=7.3^{\circ}$ and a standard deviation of $\sigma_{\alpha}=0.2^{\circ}$, the $\alpha$ distribution outputted by the Signaloid processor was:
+![Alt Text](alpha_dist.png)
 
 The corresponding output for $C_L$ was.
 
-The mean lift was 
+![Alt Text](c_lift_dist.png)
+
+The mean and standard deviation of $C_L$ were calculated to be $\left<C_L\right>=0.76233$ and $\sigma_{C_{L}}=1.17$ using the UxHwDoubleNthMoment function. We observe a slightly skewed bell-shaped distribution in $C_L$ with the expected value lying to left of the central peak in probability density. This implies that a Gaussian assumption of uncertainty in the angle of attack leads to a qualitatively Gaussian distribution in the coefficient of lift. However, due to the skew of the distribution we are more likely to overpredict the value of $C_L$. This could be potentially harmful as overestimating an essential quantity such as the coefficient of lift could lead to aerofoils being deemed to have sufficient lift for angles of attack which in reailty will not yield sufficient lift.
