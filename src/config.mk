@@ -4,7 +4,7 @@ LIBS = -lm -luxhw
 
 SRC = vector.c utils.c math_utils.c main.c
 OBJ = $(SRC:.c=.o)
-EXECUTABLE = aerofoil
+EXECUTABLE = aerofoil.exe
 
 all: $(EXECUTABLE)
 
