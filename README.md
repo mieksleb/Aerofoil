@@ -33,7 +33,7 @@ This returns the number of data points for the aerofoil, the number of panels us
 
 # Running on Signaloid.io
 
-To run this program on the Signaloid.io cloud compute services, simply click on the <img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="18"> icon at the top of the page. If you have compute time then you can compile and run this code via the <img src=icons/compile.png style=" width:35px ; height:20px "> button, this is done automatically using the config.mk makefile. The compiled program now takes in distributions for the input variables. For example the command line arguments are now the mean angle of attack $\left<\alpha\right>$, and its standard deviation $\sigma_{\alpha}$. Command line arguments are parsed into the field accessible by clicking on the <img src=icons/command.png style=" height:20px"> icon.
+To run this program on the Signaloid.io cloud compute services, simply click on the <img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="18"> icon at the top of the page. If you have compute time then you can compile and run this code via the <img src=icons/compile.png style=" height:20px "> button, this is done automatically using the config.mk makefile. The compiled program now takes in distributions for the input variables. For example the command line arguments are now the mean angle of attack $\left<\alpha\right>$, and its standard deviation $\sigma_{\alpha}$. Command line arguments are parsed into the field accessible by clicking on the <img src=icons/command.png style=" height:20px "> icon.
 
 Distributions are defined from the **UxHw** library. For example a Gaussian distribution of the variable $\alpha$ with mean $\left<\alpha\right>$ and standard distribution $\sigma_{\alpha}$ is defined by:
 ```c
@@ -56,6 +56,6 @@ The mean and standard deviation of $C_L$ were calculated using the **UxHwDoubleN
 double expected = UxHwDoubleNthMoment(C_lift, 1);
 double std = sqrt(UxHwDoubleNthMoment(C_lift, 2) - pow(UxHwDoubleNthMoment(C_lift, 1),2));
 ```
-This leads to $\left<C_L\right>=0.76233$ and $\sigma_{C_{L}}=0.88897$.
+This leads to $\left< C_{L} \right> =0.76233$ and $\sigma_{C_{L}}=0.88897$.
 
 We observe a slightly skewed bell-shaped distribution in $C_L$ with the expected value lying to left of the central peak in probability density. This implies that a Gaussian assumption of uncertainty in the angle of attack leads to a qualitatively Gaussian distribution in the coefficient of lift. However, due to the skew of the distribution we are more likely to overpredict the value of $C_L$. This could be potentially harmful as overestimating an essential quantity such as the coefficient of lift could lead to aerofoils being deemed to have sufficient lift for angles of attack which in reailty will not yield sufficient lift.
