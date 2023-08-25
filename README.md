@@ -33,7 +33,7 @@ This returns the number of data points for the aerofoil, the number of panels us
 
 # Running on Signaloid.io
 
-To run this program on the Signaloid.io cloud compute services, simply click on the <img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="18"> icon at the top of the page. If you have compute time then you can compile and run this code via the <img src=icons/compile.png style=" height:20px "> button, this is done automatically using the config.mk makefile. The compiled program now takes in distributions for the input variables. For example the command line arguments are now the mean angle of attack $\left<\alpha\right>$, and its standard deviation $\sigma_{\alpha}$. Command line arguments are parsed into the field accessible by clicking on the <img src=icons/command.png style=" height:20px "> icon.
+To run this program on the Signaloid.io cloud compute services, simply click on the <img src="https://assets.signaloid.io/add-to-signaloid-cloud-logo-dark-v6.png#gh-dark-mode-only" alt="[Add to signaloid.io]" height="18"> icon at the top of the page. If you have compute time then you can compile and run this code via the <img src=icons/compile.png style=" height:20px "> button, this is done automatically using the config.mk makefile. The compiled program now takes in distributions for the input variables. For example the command line arguments are now the mean angle of attack $\left<\alpha\right>$, and its standard deviation $\sigma_{\alpha}$. Command line arguments are parsed into the field accessible by clicking on the <img src=icons/command.png style="height:20px "> icon.
 
 Distributions are defined from the **UxHw** library. For example a Gaussian distribution of the variable $\alpha$ with mean $\left<\alpha\right>$ and standard distribution $\sigma_{\alpha}$ is defined by:
 ```c
@@ -49,7 +49,7 @@ The most relevant work on uncertainty in the angle of attack measurement is that
 
 The corresponding output for $C_L$ was:
 
-![Alt Text](images/c_lift_dist.png)
+![Alt Text1](images/c_lift_dist.png)
 
 The mean and standard deviation of $C_L$ were calculated using the **UxHwDoubleNthMoment** function to calculate the first two moments.
 ```c
