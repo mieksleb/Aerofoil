@@ -45,7 +45,8 @@ Any print statments of variables defined as distributions automatically produce 
 # Uncertainty Results
 
 The most relevant work on uncertainty in the angle of attack measurement is that of Paschereit _et al._ [[2]](https://wes.copernicus.org/articles/5/1771/2020/). In said paper, uncertainty ranges for various values of $\alpha$ are given based on the surface pressure measurement method, e.g. for some standard conditions they report $\alpha=7.3^{\circ}\pm0.2^{\circ}$. It is not described explicitly how these values are distributed but it is shown that $\alpha$ is approximately bell-shaped with repsect to the roll $\phi$ and so we will make the assumption that the distribution in $\alpha$ is Gaussian in nature. Choosing a mean value of $\left<\alpha\right>=7.3^{\circ}$ and a standard deviation of $\sigma_{\alpha}=0.2^{\circ}$, the $\alpha$ distribution outputted by the Signaloid processor was:
-![Alt Text](images/alpha_dist.jpeg)
+
+![Alt Text2](images/alpha_dist.png)
 
 The corresponding output for $C_L$ was:
 
