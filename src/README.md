@@ -27,18 +27,14 @@ $$
 We then apply the Kutta condition by equating velocity components tangential to the panels adjacent to the trailing edge on the upper and lower surface. This leads to 
 
 $$ 
-\begin{align}
-A_{N+1,j}=\frac{1}{2\pi}\bigg[\sin\theta_{i,j}\beta_{1,j}+\sin\theta_{N,J}\beta_{N,j}\nonumber\\
+A_{N+1,j}=\frac{1}{2\pi}\bigg[\sin\theta_{i,j}\beta_{1,j}+\sin\theta_{N,J}\beta_{N,j}
 -\cos\theta_{i,j}\ln\left(\frac{r_{1,j+1}}{r_{1,j}}\right)-\cos\theta_{N,j}\ln\left(\frac{r_{N,j+1}}{r_{N,j}}\right)\bigg].\nonumber
-\end{align}
 $$
 
 And finally the bottom right element is
 
 $$
-\begin{align}
-A_{N+1,N+1}=\frac{1}{2\pi}\sum_{j=1}^{N}\bigg[\sin\theta_{1,j}\ln\left(\frac{r_{1,j+1}}{r_{1,j}}\right)+\sin\theta_{N,j}\ln\left(\frac{r_{N,j+1}}{r_{N,j}}\right)\nonumber\\+\cos\theta_{1,j}\beta_{1,j}+\cos\theta_{N,j}\beta_{N,j}\bigg].\nonumber
-\end{align}
+A_{N+1,N+1}=\frac{1}{2\pi}\sum_{j=1}^{N}\bigg[\sin\theta_{1,j}\ln\left(\frac{r_{1,j+1}}{r_{1,j}}\right)+\sin\theta_{N,j}\ln\left(\frac{r_{N,j+1}}{r_{N,j}}\right)+\cos\theta_{1,j}\beta_{1,j}+\cos\theta_{N,j}\beta_{N,j}\bigg].\nonumber
 $$
 
 The final element of $b$ is 
